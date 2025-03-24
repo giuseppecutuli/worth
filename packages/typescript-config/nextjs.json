@@ -5,8 +5,11 @@
     "plugins": [{ "name": "next" }],
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "moduleDetection": "force",
     "allowJs": true,
+    "skipLibCheck": true,
     "jsx": "preserve",
-    "noEmit": true
+    "noEmit": true,
+    "lib": ["es2022", "DOM", "DOM.Iterable"],
   }
 }
