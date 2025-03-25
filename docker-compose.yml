@@ -1,0 +1,46 @@
+name: worth-platform
+
+version: '3.8'
+
+services:
+  ### 🚀 Microservizio Auth ###
+  # auth-service:
+  #   build:
+  #     context: .
+  #     dockerfile: apps/api/services/auth-service/Dockerfile
+  #   container_name: auth-service
+  #   restart: always
+  #   depends_on:
+  #     - auth-db
+  #   environment:
+  #     - DATABASE_URL=postgresql://auth_user:auth_password@auth-db:5432/auth_db
+  #     - JWT_SECRET=supersecretkey
+  #     - NODE_ENV=production
+  #   ports:
+  #     - "3000:3000"
+  #   networks:
+  #     - app-network
+
+  ### 🗄 Database per Auth ###
+  auth-db:
+    image: postgres:15
+    container_name: auth-db
+    restart: always
+    environment:
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_password
+      POSTGRES_DB: auth_db
+    ports:
+      - "5433:5432"
+    networks:
+      - app-network
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
+
+### 📡 Definizione della rete condivisa ###
+networks:
+  app-network:
+
+### 💾 Volumi per la persistenza dei dati ###
+volumes:
+  auth_db_data:

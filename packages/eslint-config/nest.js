@@ -7,7 +7,7 @@ import tseslint from 'typescript-eslint'
  *
  * @type {import("eslint").Linter.Config[]}
  * */
-export const nestJsConfig = [
+export const config = [
   ...baseConfig,
   ...tseslint.configs.recommendedTypeChecked,
   {
@@ -30,6 +30,9 @@ export const nestJsConfig = [
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+      "@typescript-eslint/no-unsafe-assignment": 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
     },
   },
 ]

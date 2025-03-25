@@ -1,3 +1,0 @@
-{
-  "extends": "@worth/typescript-config/nestjs.json",
-}

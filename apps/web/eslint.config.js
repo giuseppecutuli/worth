@@ -1,4 +1,4 @@
-import { nextJsConfig } from '@worth/eslint-config/next-js'
+import { config } from '@worth/eslint-config/next-js'
 
 /** @type {import("eslint").Linter.Config} */
-export default nextJsConfig
+export default config
