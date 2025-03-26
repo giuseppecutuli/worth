@@ -9,7 +9,7 @@
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "build:backend": {
-      "dependsOn": ["clean:microservices", "^build:backend"],
+      "dependsOn": ["clean:backend", "^build:backend"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**"],
       "cache": true
@@ -24,7 +24,7 @@
       "cache": false,
       "persistent": true
     },
-    "clean:microservices": {
+    "clean:backend": {
       "cache": false
     }
   }

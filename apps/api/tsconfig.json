@@ -1,0 +1,13 @@
+{
+  "extends": "@worth/typescript-config/nestjs.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "paths": {
+      "@auth/*": ["src/auth/*"],
+      "@common/*": ["src/common/*"],
+      "@config/*": ["src/config/*"],
+      "@prisma/*": ["src/prisma/*"],
+    }
+  }
+}

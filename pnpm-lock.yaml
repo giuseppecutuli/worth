@@ -18,29 +18,7 @@ importers:
         specifier: 5.8.2
         version: 5.8.2
 
-  apps/api/libs/common:
-    dependencies:
-      '@nestjs/common':
-        specifier: ^11.0.12
-        version: 11.0.12(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.2)
-      '@nestjs/swagger':
-        specifier: ^11.0.7
-        version: 11.0.7(@nestjs/common@11.0.12(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.0.12(@nestjs/common@11.0.12(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.0.12)(reflect-metadata@0.2.2)(rxjs@7.8.2))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)
-      nestjs-pino:
-        specifier: ^4.4.0
-        version: 4.4.0(@nestjs/common@11.0.12(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.2))(pino-http@10.4.0)(pino@9.6.0)(rxjs@7.8.2)
-    devDependencies:
-      '@worth/eslint-config':
-        specifier: workspace:*
-        version: link:../../../../packages/eslint-config
-      '@worth/typescript-config':
-        specifier: workspace:*
-        version: link:../../../../packages/typescript-config
-      typescript:
-        specifier: ^5.8.2
-        version: 5.8.2
-
-  apps/api/services/auth-service:
+  apps/api:
     dependencies:
       '@nestjs/common':
         specifier: ^11.0.1
@@ -91,9 +69,6 @@ importers:
         specifier: ^7.8.1
         version: 7.8.2
     devDependencies:
-      '@microservices/common':
-        specifier: workspace:*
-        version: link:../../libs/common
       '@nestjs/cli':
         specifier: ^11.0.0
         version: 11.0.5(@swc/cli@0.6.0(@swc/core@1.11.13(@swc/helpers@0.5.15))(chokidar@4.0.3))(@swc/core@1.11.13(@swc/helpers@0.5.15))(@types/node@22.13.10)(esbuild@0.25.1)
@@ -123,13 +98,13 @@ importers:
         version: 6.0.3
       '@worth/eslint-config':
         specifier: workspace:*
-        version: link:../../../../packages/eslint-config
+        version: link:../../packages/eslint-config
       '@worth/prettier-config':
         specifier: workspace:*
-        version: link:../../../../packages/prettier-config
+        version: link:../../packages/prettier-config
       '@worth/typescript-config':
         specifier: workspace:*
-        version: link:../../../../packages/typescript-config
+        version: link:../../packages/typescript-config
       eslint:
         specifier: ^9.23.0
         version: 9.23.0
