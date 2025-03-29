@@ -12,7 +12,7 @@ services:
     depends_on:
       - db
     environment:
-      - DATABASE_URL=postgresql://user:password@auth-db:5432/db
+      - DATABASE_URL=postgresql://user:password@db:5432/db
       - JWT_SECRET=supersecretkey
       - NODE_ENV=production
     ports:
