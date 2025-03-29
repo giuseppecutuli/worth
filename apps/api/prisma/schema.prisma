@@ -33,3 +33,65 @@ model User {
 
   @@map("users")
 }
+
+enum BankAccountType {
+  GENERAL
+  INVESTMENT
+  EMERGENCY
+}
+
+model BankAccount {
+  id  String  @id @default(uuid())
+  name String
+  iban String?
+  type BankAccountType @default(GENERAL)
+  transactions Transaction[]
+
+  created_at              DateTime       @default(now())
+  updated_at              DateTime       @updatedAt
+
+  @@map("bank_accounts")
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  CREDIT
+  DEBIT
+  PAYMENT
+}
+
+enum Currency {
+  EUR
+}
+
+model TransactionCategory {
+  id  String  @id @default(uuid())
+  name String
+
+  transactions Transaction[]
+
+  created_at              DateTime       @default(now())
+  updated_at              DateTime       @updatedAt
+
+  @@map("transaction_categories")
+}
+
+model Transaction {
+  id  String  @id @default(uuid())
+  amount Decimal
+  currency Currency @default(EUR)
+  description String
+  type TransactionType
+  date DateTime
+  categories TransactionCategory[]
+
+  bank_account BankAccount @relation(fields: [bank_account_id], references: [id])
+  bank_account_id String
+
+  created_at              DateTime       @default(now())
+  updated_at              DateTime       @updatedAt
+
+  @@map("transactions")
+}
+
