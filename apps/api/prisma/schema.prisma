@@ -13,8 +13,8 @@ model RefreshToken {
   expiration_date DateTime
   user            User     @relation(fields: [user_id], references: [id])
   user_id         String
-  created_at       DateTime @default(now())
-  updated_at       DateTime @updatedAt
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
 
   @@map("refresh_tokens")
 }
@@ -28,29 +28,29 @@ model User {
   refresh_tokens         RefreshToken[]
   reset_token            String?
   reset_token_expiration DateTime?
-  created_at              DateTime       @default(now())
-  updated_at              DateTime       @updatedAt
+  created_at             DateTime       @default(now())
+  updated_at             DateTime       @updatedAt
 
   @@map("users")
 }
 
-enum BankAccountType {
+enum AccountType {
   GENERAL
   INVESTMENT
   EMERGENCY
 }
 
-model BankAccount {
-  id  String  @id @default(uuid())
-  name String
-  iban String?
-  type BankAccountType @default(GENERAL)
+model Account {
+  id           String        @id @default(uuid())
+  name         String
+  iban         String?
+  type         AccountType   @default(GENERAL)
   transactions Transaction[]
 
-  created_at              DateTime       @default(now())
-  updated_at              DateTime       @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
-  @@map("bank_accounts")
+  @@map("accounts")
 }
 
 enum TransactionType {
@@ -66,32 +66,31 @@ enum Currency {
 }
 
 model TransactionCategory {
-  id  String  @id @default(uuid())
+  id   String @id @default(uuid())
   name String
 
   transactions Transaction[]
 
-  created_at              DateTime       @default(now())
-  updated_at              DateTime       @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("transaction_categories")
 }
 
 model Transaction {
-  id  String  @id @default(uuid())
-  amount Decimal
-  currency Currency @default(EUR)
+  id          String                @id @default(uuid())
+  amount      Decimal
+  currency    Currency              @default(EUR)
   description String
-  type TransactionType
-  date DateTime
-  categories TransactionCategory[]
+  type        TransactionType
+  date        DateTime
+  categories  TransactionCategory[]
 
-  bank_account BankAccount @relation(fields: [bank_account_id], references: [id])
-  bank_account_id String
+  account    Account @relation(fields: [account_id], references: [id])
+  account_id String
 
-  created_at              DateTime       @default(now())
-  updated_at              DateTime       @updatedAt
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@map("transactions")
 }
-
