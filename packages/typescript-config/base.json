@@ -11,5 +11,6 @@
     "resolveJsonModule": true,
     "strict": true,
     "target": "ES2023"
-  }
+  },
+  "exclude": [".dockerignore"]
 }

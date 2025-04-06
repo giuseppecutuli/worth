@@ -5,6 +5,7 @@
     "build": "turbo run build",
     "build:backend": "turbo run build:backend",
     "clean:backend": "turbo run clean:backend",
+    "db:deploy": "turbo run db:deploy",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",

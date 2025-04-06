@@ -14,6 +14,10 @@
       "outputs": ["dist/**"],
       "cache": true
     },
+    "db:deploy": {
+      "dependsOn": ["^db:deploy"],
+      "cache": true
+    },
     "lint": {
       "dependsOn": ["^lint"]
     },

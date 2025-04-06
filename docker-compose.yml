@@ -12,15 +12,15 @@ services:
     depends_on:
       - db
     environment:
+      - PORT=3346
       - DATABASE_URL=postgresql://user:password@db:5432/db
-      - JWT_SECRET=supersecretkey
-      - NODE_ENV=production
+      - JWT_SECRET=supersecret
+      - JWT_REFRESH_SECRET=supersecret
     ports:
       - "3346:3346"
     networks:
       - app-network
 
-  ### 🗄 Database per Auth ###
   db:
     image: postgres:15
     container_name: db

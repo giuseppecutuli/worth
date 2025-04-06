@@ -8,7 +8,6 @@ WORKDIR /workspace
 # Copy root workspace configuration files
 COPY package.json ./
 COPY pnpm-workspace.yaml ./
-#COPY pnpm-lock.yaml ./ <---DO NOT COPY pnpm-lock.yaml as it will cause blotted node_modules
 COPY turbo.json ./
 
 # Copy shared packages
@@ -20,9 +19,6 @@ COPY apps/api/tsconfig*.json ./apps/api/
 COPY apps/api/nest-cli.json ./apps/api/
 COPY apps/api/src ./apps/api/src
 COPY apps/api/prisma ./apps/api/prisma
-
-RUN cat ./package.json
-RUN cat ./turbo.json
 
 # Install pnpm
 RUN npm install -g pnpm@10.2.1
@@ -58,14 +54,12 @@ COPY --from=builder /workspace/packages ./packages
 COPY --from=builder /workspace/apps/api/package.json ./apps/api/
 COPY --from=builder /workspace/apps/api/dist ./apps/api/dist
 
-# Install production dependencies
-RUN pnpm install --prod --no-frozen-lockfile --ignore-scripts
+COPY --from=builder /workspace/node_modules ./node_modules
+COPY --from=builder /workspace/apps/api/node_modules ./apps/api/node_modules
 
 # Set working directory to service folder
 WORKDIR /app/apps/api
 
 # Start the application
+CMD ["sh", "-c", "pnpm run db:deploy"]
 CMD ["node", "dist/main"]
-
-# Expose Auth Service port (adjust if needed)
-EXPOSE 3346
