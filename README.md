@@ -27,3 +27,6 @@ To develop all apps and packages, run the following command:
 cd worth
 pnpm dev
 ```
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
