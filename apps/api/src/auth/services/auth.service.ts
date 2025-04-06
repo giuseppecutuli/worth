@@ -10,6 +10,7 @@ import { JwtPayload } from '@auth/interfaces'
 import { PrismaService } from '@prisma/prisma.service'
 import { Config } from '@config/config.interface'
 import { randomString } from '@common/utils'
+import { Role } from '@prisma/client'
 
 @Injectable()
 export class AuthService {
@@ -61,6 +62,7 @@ export class AuthService {
         password: hashedPassword,
         first_name: data.first_name,
         last_name: data.last_name,
+        role: Role.USER,
       },
     })
 

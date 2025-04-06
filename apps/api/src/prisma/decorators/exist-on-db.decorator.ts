@@ -22,7 +22,7 @@ export class PrismaExistValidator implements ValidatorConstraintInterface {
     const [property] = args.constraints
     const { entity, field } = property as Options
 
-    if (this.prisma[entity]) {
+    if (!this.prisma[entity]) {
       throw new Error(`entity ${entity} does not exist on the database.`)
     }
 

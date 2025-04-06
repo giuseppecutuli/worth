@@ -19,33 +19,79 @@ model RefreshToken {
   @@map("refresh_tokens")
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 model User {
-  id                     String         @id @default(uuid())
-  first_name             String
-  last_name              String
-  email                  String         @unique
-  password               String
-  refresh_tokens         RefreshToken[]
-  reset_token            String?
-  reset_token_expiration DateTime?
-  created_at             DateTime       @default(now())
-  updated_at             DateTime       @updatedAt
+  id                       String                  @id @default(uuid())
+  first_name               String
+  last_name                String
+  email                    String                  @unique
+  password                 String
+  role                     Role
+  transactions             Transaction[]
+  investments_transactions InvestmentTransaction[]
+  assets                   Asset[]
+  accounts                 Account[]
+  account_categories       AccountCategory[]
+  transaction_categories   TransactionCategory[]
+  refresh_tokens           RefreshToken[]
+  reset_token              String?
+  reset_token_expiration   DateTime?
+  created_at               DateTime                @default(now())
+  updated_at               DateTime                @updatedAt
 
   @@map("users")
 }
 
 enum AccountType {
-  GENERAL
+  BANK
+  CASH
+  CRYPTO
+  WALLET
   INVESTMENT
-  EMERGENCY
+}
+
+model AccountCategory {
+  id   String @id @default(uuid())
+  name String
+
+  accounts AccountCategoriesOnAccounts[]
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("account_categories")
+}
+
+model AccountCategoriesOnAccounts {
+  account     Account         @relation(fields: [account_id], references: [id])
+  account_id  String
+  category    AccountCategory @relation(fields: [category_id], references: [id])
+  category_id String
+  assigned_at DateTime        @default(now())
+
+  @@id([account_id, category_id])
+  @@map("account_categories_on_accounts")
 }
 
 model Account {
-  id           String        @id @default(uuid())
-  name         String
-  iban         String?
-  type         AccountType   @default(GENERAL)
-  transactions Transaction[]
+  id                       String                  @id @default(uuid())
+  name                     String
+  iban                     String?
+  type                     AccountType             @default(BANK)
+  transactions             Transaction[]
+  investments_transactions InvestmentTransaction[]
+
+  categories AccountCategoriesOnAccounts[]
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -69,7 +115,10 @@ model TransactionCategory {
   id   String @id @default(uuid())
   name String
 
-  transactions Transaction[]
+  transactions TransactionCategoriesOnTransactions[]
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -77,20 +126,83 @@ model TransactionCategory {
   @@map("transaction_categories")
 }
 
+model TransactionCategoriesOnTransactions {
+  transaction    Transaction         @relation(fields: [transaction_id], references: [id])
+  transaction_id String
+  category       TransactionCategory @relation(fields: [category_id], references: [id])
+  category_id    String
+  assigned_at    DateTime            @default(now())
+
+  @@id([transaction_id, category_id])
+  @@map("transaction_categories_on_transactions")
+}
+
 model Transaction {
-  id          String                @id @default(uuid())
+  id          String                                @id @default(uuid())
   amount      Decimal
-  currency    Currency              @default(EUR)
+  currency    Currency                              @default(EUR)
   description String
   type        TransactionType
   date        DateTime
-  categories  TransactionCategory[]
+  categories  TransactionCategoriesOnTransactions[]
 
-  account    Account @relation(fields: [account_id], references: [id])
-  account_id String
+  account    Account? @relation(fields: [account_id], references: [id])
+  account_id String?
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
   @@map("transactions")
+}
+
+enum AssetType {
+  STOCK // Azioni (es. Apple, Tesla)
+  ETF // Fondi indicizzati (es. S&P 500 ETF)
+  CRYPTO // Criptovalute (es. Bitcoin, Ethereum)
+  BOND // Obbligazioni
+  COMMODITY // Commodities (es. oro, petrolio)
+  REAL_ESTATE // Immobiliare
+  MUTUAL_FUND // Fondi comuni di investimento
+}
+
+model Asset {
+  id                      String                  @id @default(uuid())
+  name                    String
+  symbol                  String
+  type                    AssetType
+  investment_transactions InvestmentTransaction[]
+  user                    User                    @relation(fields: [user_id], references: [id])
+  user_id                 String
+  created_at              DateTime                @default(now())
+  updated_at              DateTime                @updatedAt
+
+  @@map("assets")
+}
+
+enum InvestmentTransactionType {
+  BUY
+  SELL
+}
+
+model InvestmentTransaction {
+  id       String                    @id @default(uuid())
+  type     InvestmentTransactionType
+  quantity Decimal
+  price    Decimal
+  date     DateTime
+
+  asset      Asset   @relation(fields: [asset_id], references: [id])
+  asset_id   String
+  account    Account @relation(fields: [account_id], references: [id])
+  account_id String
+  user       User    @relation(fields: [user_id], references: [id])
+  user_id    String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("investment_transactions")
 }

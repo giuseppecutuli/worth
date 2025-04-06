@@ -5,6 +5,7 @@ import { useContainer } from 'class-validator'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { Config } from '@config/config.interface'
 import { AppModule } from './app.module'
+import { validationExceptionFactory } from '@common/utils'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -18,6 +19,7 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
+      exceptionFactory: validationExceptionFactory,
     }),
   )
   useContainer(app.select(AppModule), { fallbackOnErrors: true })

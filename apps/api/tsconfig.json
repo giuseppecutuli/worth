@@ -8,6 +8,7 @@
       "@common/*": ["src/common/*"],
       "@config/*": ["src/config/*"],
       "@prisma/*": ["src/prisma/*"],
+      "@users/*": ["src/users/*"],
     }
   }
 }
