@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsDate, IsDecimal, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator'
-import { Currency, TransactionType } from '../types'
 import { ExistOnDb } from '@prisma/decorators/exist-on-db.decorator'
+import { Currency, TransactionType } from '@prisma/client'
 
 export class CreateTransactionDto {
   @ApiProperty()

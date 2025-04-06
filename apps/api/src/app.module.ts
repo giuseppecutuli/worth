@@ -7,6 +7,7 @@ import { PrismaExistValidator } from '@prisma/decorators/exist-on-db.decorator'
 import configuration from './config/configuration'
 import { UsersModule } from '@users/users.module'
 import { TransactionsModule } from './transactions/transactions.module'
+import { AccountsModule } from '@accounts/accounts.module'
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TransactionsModule } from './transactions/transactions.module'
     AuthModule,
     UsersModule,
     TransactionsModule,
+    AccountsModule,
   ],
   providers: [PrismaExistValidator],
   controllers: [],

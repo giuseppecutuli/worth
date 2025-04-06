@@ -9,6 +9,7 @@
       "@config/*": ["src/config/*"],
       "@prisma/*": ["src/prisma/*"],
       "@users/*": ["src/users/*"],
+      "@accounts/*": ["src/accounts/*"],
     }
   }
 }
