@@ -37,6 +37,7 @@ model User {
   accounts                 Account[]
   account_categories       AccountCategory[]
   transaction_categories   TransactionCategory[]
+  budgets                  Budget[]
   refresh_tokens           RefreshToken[]
   reset_token              String?
   reset_token_expiration   DateTime?
@@ -116,6 +117,7 @@ model TransactionCategory {
   name String
 
   transactions TransactionCategoriesOnTransactions[]
+  budgets      BudgetCategoriesOnBudgets[]
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String
@@ -205,4 +207,29 @@ model InvestmentTransaction {
   updated_at DateTime @updatedAt
 
   @@map("investment_transactions")
+}
+
+model BudgetCategoriesOnBudgets {
+  budget     Budget         @relation(fields: [budget_id], references: [id])
+  budget_id  String
+  category   TransactionCategory @relation(fields: [category_id], references: [id])
+  category_id String
+  assigned_at DateTime       @default(now())
+
+  @@id([budget_id, category_id])
+  @@map("budget_categories_on_budgets")
+}
+
+model Budget {
+  id            String      @id @default(uuid())
+  user          User        @relation(fields: [user_id], references: [id])
+  user_id       String
+  start_date    DateTime
+  end_date      DateTime
+  amount        Decimal
+  categories    BudgetCategoriesOnBudgets[]
+  created_at    DateTime    @default(now())
+  updated_at    DateTime    @updatedAt
+
+  @@map("budgets")
 }
