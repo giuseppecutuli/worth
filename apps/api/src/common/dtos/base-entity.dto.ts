@@ -5,8 +5,8 @@ export class BaseEntityDto {
   id: string
 
   @ApiProperty()
-  createdAt: Date
+  created_at: Date
 
   @ApiProperty()
-  updatedAt: Date
+  updated_at: Date
 }
