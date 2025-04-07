@@ -5,10 +5,10 @@ export class PaginateDto {
   @ApiProperty({ required: false })
   @IsOptional()
   @Min(0)
-  page?: number
+  page: number = 0
 
   @ApiProperty({ required: false })
   @IsOptional()
   @Max(100)
-  limit?: number
+  limit: number = 10
 }

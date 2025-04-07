@@ -8,6 +8,7 @@ import configuration from './config/configuration'
 import { UsersModule } from '@users/users.module'
 import { TransactionsModule } from './transactions/transactions.module'
 import { AccountsModule } from '@accounts/accounts.module'
+import { AccountCategoriesModule } from '@account-categories/account-categories.module'
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AccountsModule } from '@accounts/accounts.module'
     UsersModule,
     TransactionsModule,
     AccountsModule,
+    AccountCategoriesModule,
   ],
   providers: [PrismaExistValidator],
   controllers: [],

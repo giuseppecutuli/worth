@@ -1,4 +1,4 @@
-import { NestFactory } from '@nestjs/core'
+import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { ConfigService } from '@nestjs/config'
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { useContainer } from 'class-validator'
@@ -6,6 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { Config } from '@config/config.interface'
 import { AppModule } from './app.module'
 import { validationExceptionFactory } from '@common/utils'
+import { PrismaClientExceptionFilter } from '@prisma/filters/prisma-client-exception.filter'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -36,6 +37,13 @@ async function bootstrap() {
 
     SwaggerModule.setup(swaggerConfig.path, app, document)
   }
+
+  // enable shutdown hook
+  app.enableShutdownHooks()
+
+  // Prisma Client Exception Filter for unhandled exceptions
+  const { httpAdapter } = app.get(HttpAdapterHost)
+  app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter))
 
   // Cors
   if (corsConfig?.enabled) {

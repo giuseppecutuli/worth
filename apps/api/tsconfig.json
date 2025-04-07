@@ -10,6 +10,7 @@
       "@prisma/*": ["src/prisma/*"],
       "@users/*": ["src/users/*"],
       "@accounts/*": ["src/accounts/*"],
+      "@account-categories/*": ["src/account-categories/*"],
     }
   }
 }
