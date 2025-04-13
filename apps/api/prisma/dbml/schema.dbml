@@ -1,0 +1,235 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table refresh_tokens {
+  id String [pk]
+  token String [unique, not null]
+  expiration_date DateTime [not null]
+  user users [not null]
+  user_id String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+}
+
+Table users {
+  id String [pk]
+  first_name String [not null]
+  last_name String [not null]
+  email String [unique, not null]
+  password String [not null]
+  role Role [not null]
+  transactions transactions [not null]
+  investments_transactions investment_transactions [not null]
+  assets assets [not null]
+  accounts accounts [not null]
+  account_categories account_categories [not null]
+  transaction_categories transaction_categories [not null]
+  budgets budgets [not null]
+  refresh_tokens refresh_tokens [not null]
+  reset_token String
+  reset_token_expiration DateTime
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+}
+
+Table account_categories {
+  id String [pk]
+  name String [not null]
+  accounts account_categories_on_accounts [not null]
+  user users [not null]
+  user_id String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+}
+
+Table account_categories_on_accounts {
+  account accounts [not null]
+  account_id String [not null]
+  category account_categories [not null]
+  category_id String [not null]
+  assigned_at DateTime [default: `now()`, not null]
+
+  indexes {
+    (account_id, category_id) [pk]
+  }
+}
+
+Table accounts {
+  id String [pk]
+  name String [not null]
+  iban String
+  type AccountType [not null, default: 'BANK']
+  transactions transactions [not null]
+  investments_transactions investment_transactions [not null]
+  categories account_categories_on_accounts [not null]
+  user users [not null]
+  user_id String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+}
+
+Table transaction_categories {
+  id String [pk]
+  name String [not null]
+  transactions transaction_categories_on_transactions [not null]
+  budgets budget_categories_on_budgets [not null]
+  user users [not null]
+  user_id String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+}
+
+Table transaction_categories_on_transactions {
+  transaction transactions [not null]
+  transaction_id String [not null]
+  category transaction_categories [not null]
+  category_id String [not null]
+  assigned_at DateTime [default: `now()`, not null]
+
+  indexes {
+    (transaction_id, category_id) [pk]
+  }
+}
+
+Table transactions {
+  id String [pk]
+  amount Decimal [not null]
+  currency Currency [not null, default: 'EUR']
+  description String [not null]
+  type TransactionType [not null]
+  date DateTime [not null]
+  categories transaction_categories_on_transactions [not null]
+  account accounts
+  account_id String
+  user users [not null]
+  user_id String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+}
+
+Table assets {
+  id String [pk]
+  name String [not null]
+  symbol String [not null]
+  type AssetType [not null]
+  investment_transactions investment_transactions [not null]
+  user users [not null]
+  user_id String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+}
+
+Table investment_transactions {
+  id String [pk]
+  type InvestmentTransactionType [not null]
+  quantity Decimal [not null]
+  price Decimal [not null]
+  date DateTime [not null]
+  asset assets [not null]
+  asset_id String [not null]
+  account accounts [not null]
+  account_id String [not null]
+  user users [not null]
+  user_id String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+}
+
+Table budget_categories_on_budgets {
+  budget budgets [not null]
+  budget_id String [not null]
+  category transaction_categories [not null]
+  category_id String [not null]
+  assigned_at DateTime [default: `now()`, not null]
+
+  indexes {
+    (budget_id, category_id) [pk]
+  }
+}
+
+Table budgets {
+  id String [pk]
+  user users [not null]
+  user_id String [not null]
+  start_date DateTime [not null]
+  end_date DateTime [not null]
+  amount Decimal [not null]
+  categories budget_categories_on_budgets [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+}
+
+Enum Role {
+  ADMIN
+  USER
+}
+
+Enum AccountType {
+  BANK
+  CASH
+  CRYPTO
+  WALLET
+  INVESTMENT
+}
+
+Enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  CREDIT
+  DEBIT
+  PAYMENT
+}
+
+Enum Currency {
+  EUR
+}
+
+Enum AssetType {
+  STOCK
+  ETF
+  CRYPTO
+  BOND
+  COMMODITY
+  REAL_ESTATE
+  MUTUAL_FUND
+}
+
+Enum InvestmentTransactionType {
+  BUY
+  SELL
+}
+
+Ref: refresh_tokens.user_id > users.id
+
+Ref: account_categories.user_id > users.id
+
+Ref: account_categories_on_accounts.account_id > accounts.id
+
+Ref: account_categories_on_accounts.category_id > account_categories.id
+
+Ref: accounts.user_id > users.id
+
+Ref: transaction_categories.user_id > users.id
+
+Ref: transaction_categories_on_transactions.transaction_id > transactions.id
+
+Ref: transaction_categories_on_transactions.category_id > transaction_categories.id
+
+Ref: transactions.account_id > accounts.id
+
+Ref: transactions.user_id > users.id
+
+Ref: assets.user_id > users.id
+
+Ref: investment_transactions.asset_id > assets.id
+
+Ref: investment_transactions.account_id > accounts.id
+
+Ref: investment_transactions.user_id > users.id
+
+Ref: budget_categories_on_budgets.budget_id > budgets.id
+
+Ref: budget_categories_on_budgets.category_id > transaction_categories.id
+
+Ref: budgets.user_id > users.id
