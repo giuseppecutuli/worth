@@ -26,6 +26,10 @@ export class PrismaExistValidator implements ValidatorConstraintInterface {
       throw new Error(`entity ${entity} does not exist on the database.`)
     }
 
+    if (!value || (Array.isArray(value) && !value.length)) {
+      return false
+    }
+
     try {
       const rows = await this.prisma[entity].findMany({
         where: {

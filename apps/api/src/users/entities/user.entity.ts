@@ -1,14 +1,27 @@
-import { $Enums, User as PrismaUser } from '@prisma/client'
+import { BaseEntityDto } from '@common/dtos'
+import { ApiProperty } from '@nestjs/swagger'
+import { User as PrismaUser, Role } from '@prisma/client'
+import { Exclude } from 'class-transformer'
 
-export class User implements PrismaUser {
-  id: string
+export class User extends BaseEntityDto implements PrismaUser {
+  @ApiProperty()
   first_name: string
+
+  @ApiProperty()
   last_name: string
+
+  @ApiProperty()
   email: string
+
+  @ApiProperty({ enum: Role })
+  role: Role
+
+  @Exclude()
   password: string
-  role: $Enums.Role
+
+  @Exclude()
   reset_token: string | null
+
+  @Exclude()
   reset_token_expiration: Date | null
-  created_at: Date
-  updated_at: Date
 }

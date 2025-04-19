@@ -5,12 +5,13 @@ import { jwtDecode, JwtPayload as JwtDecodePayload } from 'jwt-decode'
 import { PasswordService } from './password.service'
 import { AuthErrors, AuthMessages, RESET_TOKEN_DURATION } from '@auth/auth.constants'
 import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignOutDto, SignUpDto } from '@auth/dtos/requests'
-import { Token, User } from '@auth/dtos/responses'
+import { Token } from '@auth/dtos/responses'
 import { JwtPayload } from '@auth/interfaces'
 import { PrismaService } from '@prisma/prisma.service'
 import { Config } from '@config/config.interface'
 import { randomString } from '@common/utils'
 import { Role } from '@prisma/client'
+import { User } from '@users/entities'
 
 @Injectable()
 export class AuthService {

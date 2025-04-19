@@ -58,7 +58,7 @@ Table account_categories_on_accounts {
 Table accounts {
   id String [pk]
   name String [not null]
-  iban String
+  iban String [unique]
   type AccountType [not null, default: 'BANK']
   transactions transactions [not null]
   investments_transactions investment_transactions [not null]

@@ -1,16 +1,18 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsDate, IsDecimal, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator'
+import { IsArray, IsDate, IsDateString, IsEnum, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator'
 import { ExistOnDb } from '@prisma/decorators/exist-on-db.decorator'
 import { Currency, TransactionType } from '@prisma/client'
+import { Type } from 'class-transformer'
 
 export class CreateTransactionDto {
   @ApiProperty()
-  @IsDecimal()
+  @IsNumber()
   amount: number
 
-  @ApiProperty({ enum: Currency })
+  @ApiProperty({ enum: Currency, default: Currency.EUR })
   @IsEnum(Currency)
-  currency: Currency
+  @IsOptional()
+  currency: Currency = Currency.EUR
 
   @ApiProperty()
   @IsString()
@@ -22,13 +24,15 @@ export class CreateTransactionDto {
 
   @ApiProperty()
   @IsDate()
+  @Type(() => Date)
   date: Date
 
-  @ApiProperty()
+  @ApiProperty({ required: false, isArray: true })
   @IsUUID(undefined, { each: true })
+  @IsArray()
   @IsOptional()
   @ExistOnDb({ entity: 'transactionCategory', field: 'id' })
-  categories: string[]
+  categories?: string[]
 
   @ApiProperty()
   @IsUUID()

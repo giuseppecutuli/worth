@@ -3,8 +3,9 @@ import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { UseAuth } from './decorators/auth.decorator'
 import { UseUser } from './decorators/user.decorator'
 import { AuthService } from './services/auth.service'
-import { Token, User } from './dtos/responses'
+import { Token } from './dtos/responses'
 import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignOutDto, SignUpDto } from './dtos/requests'
+import { User } from '@users/entities'
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -32,7 +33,7 @@ export class AuthController {
   @ApiOkResponse({
     type: User,
   })
-  me(@UseUser() user: User) {
+  me(@UseUser() user: User): User {
     return user
   }
 
