@@ -200,36 +200,36 @@ Enum InvestmentTransactionType {
   SELL
 }
 
-Ref: refresh_tokens.user_id > users.id
+Ref: refresh_tokens.user_id > users.id [delete: Cascade]
 
-Ref: account_categories.user_id > users.id
+Ref: account_categories.user_id > users.id [delete: Cascade]
 
-Ref: account_categories_on_accounts.account_id > accounts.id
+Ref: account_categories_on_accounts.account_id > accounts.id [delete: Cascade]
 
-Ref: account_categories_on_accounts.category_id > account_categories.id
+Ref: account_categories_on_accounts.category_id > account_categories.id [delete: Cascade]
 
-Ref: accounts.user_id > users.id
+Ref: accounts.user_id > users.id [delete: Cascade]
 
-Ref: transaction_categories.user_id > users.id
+Ref: transaction_categories.user_id > users.id [delete: Cascade]
 
-Ref: transaction_categories_on_transactions.transaction_id > transactions.id
+Ref: transaction_categories_on_transactions.transaction_id > transactions.id [delete: Cascade]
 
-Ref: transaction_categories_on_transactions.category_id > transaction_categories.id
+Ref: transaction_categories_on_transactions.category_id > transaction_categories.id [delete: Cascade]
 
-Ref: transactions.account_id > accounts.id
+Ref: transactions.account_id > accounts.id [delete: Cascade]
 
-Ref: transactions.user_id > users.id
+Ref: transactions.user_id > users.id [delete: Cascade]
 
-Ref: assets.user_id > users.id
+Ref: assets.user_id > users.id [delete: Cascade]
 
-Ref: investment_transactions.asset_id > assets.id
+Ref: investment_transactions.asset_id > assets.id [delete: Cascade]
 
-Ref: investment_transactions.account_id > accounts.id
+Ref: investment_transactions.account_id > accounts.id [delete: Cascade]
 
-Ref: investment_transactions.user_id > users.id
+Ref: investment_transactions.user_id > users.id [delete: Cascade]
 
-Ref: budget_categories_on_budgets.budget_id > budgets.id
+Ref: budget_categories_on_budgets.budget_id > budgets.id [delete: Cascade]
 
-Ref: budget_categories_on_budgets.category_id > transaction_categories.id
+Ref: budget_categories_on_budgets.category_id > transaction_categories.id [delete: Cascade]
 
-Ref: budgets.user_id > users.id
+Ref: budgets.user_id > users.id [delete: Cascade]

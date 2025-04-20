@@ -15,7 +15,7 @@ model RefreshToken {
   id              String   @id @default(uuid())
   token           String   @unique
   expiration_date DateTime
-  user            User     @relation(fields: [user_id], references: [id])
+  user            User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id         String
   created_at      DateTime @default(now())
   updated_at      DateTime @updatedAt
@@ -65,7 +65,7 @@ model AccountCategory {
 
   accounts AccountCategoriesOnAccounts[]
 
-  user    User   @relation(fields: [user_id], references: [id])
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id String
 
   created_at DateTime @default(now())
@@ -75,9 +75,9 @@ model AccountCategory {
 }
 
 model AccountCategoriesOnAccounts {
-  account     Account         @relation(fields: [account_id], references: [id])
+  account     Account         @relation(fields: [account_id], references: [id], onDelete: Cascade)
   account_id  String
-  category    AccountCategory @relation(fields: [category_id], references: [id])
+  category    AccountCategory @relation(fields: [category_id], references: [id], onDelete: Cascade)
   category_id String
   assigned_at DateTime        @default(now())
 
@@ -95,7 +95,7 @@ model Account {
 
   categories AccountCategoriesOnAccounts[]
 
-  user    User   @relation(fields: [user_id], references: [id])
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id String
 
   created_at DateTime @default(now())
@@ -123,7 +123,7 @@ model TransactionCategory {
   transactions TransactionCategoriesOnTransactions[]
   budgets      BudgetCategoriesOnBudgets[]
 
-  user    User   @relation(fields: [user_id], references: [id])
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id String
 
   created_at DateTime @default(now())
@@ -133,9 +133,9 @@ model TransactionCategory {
 }
 
 model TransactionCategoriesOnTransactions {
-  transaction    Transaction         @relation(fields: [transaction_id], references: [id])
+  transaction    Transaction         @relation(fields: [transaction_id], references: [id], onDelete: Cascade)
   transaction_id String
-  category       TransactionCategory @relation(fields: [category_id], references: [id])
+  category       TransactionCategory @relation(fields: [category_id], references: [id], onDelete: Cascade)
   category_id    String
   assigned_at    DateTime            @default(now())
 
@@ -152,10 +152,10 @@ model Transaction {
   date        DateTime
   categories  TransactionCategoriesOnTransactions[]
 
-  account    Account? @relation(fields: [account_id], references: [id])
+  account    Account? @relation(fields: [account_id], references: [id], onDelete: Cascade)
   account_id String?
 
-  user    User   @relation(fields: [user_id], references: [id])
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id String
 
   created_at DateTime @default(now())
@@ -180,7 +180,7 @@ model Asset {
   symbol                  String
   type                    AssetType
   investment_transactions InvestmentTransaction[]
-  user                    User                    @relation(fields: [user_id], references: [id])
+  user                    User                    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id                 String
   created_at              DateTime                @default(now())
   updated_at              DateTime                @updatedAt
@@ -200,11 +200,11 @@ model InvestmentTransaction {
   price    Decimal
   date     DateTime
 
-  asset      Asset   @relation(fields: [asset_id], references: [id])
+  asset      Asset   @relation(fields: [asset_id], references: [id], onDelete: Cascade)
   asset_id   String
-  account    Account @relation(fields: [account_id], references: [id])
+  account    Account @relation(fields: [account_id], references: [id], onDelete: Cascade)
   account_id String
-  user       User    @relation(fields: [user_id], references: [id])
+  user       User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id    String
 
   created_at DateTime @default(now())
@@ -214,9 +214,9 @@ model InvestmentTransaction {
 }
 
 model BudgetCategoriesOnBudgets {
-  budget     Budget         @relation(fields: [budget_id], references: [id])
+  budget     Budget         @relation(fields: [budget_id], references: [id], onDelete: Cascade)
   budget_id  String
-  category   TransactionCategory @relation(fields: [category_id], references: [id])
+  category   TransactionCategory @relation(fields: [category_id], references: [id], onDelete: Cascade)
   category_id String
   assigned_at DateTime       @default(now())
 
@@ -226,7 +226,7 @@ model BudgetCategoriesOnBudgets {
 
 model Budget {
   id            String      @id @default(uuid())
-  user          User        @relation(fields: [user_id], references: [id])
+  user          User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id       String
   start_date    DateTime
   end_date      DateTime
