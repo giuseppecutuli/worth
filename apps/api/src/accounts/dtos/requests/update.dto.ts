@@ -3,19 +3,21 @@ import { AccountType } from '@prisma/client'
 import { ExistOnDb } from '@prisma/decorators/exist-on-db.decorator'
 import { IsEnum, IsOptional, IsString, IsUUID } from 'class-validator'
 
-export class CreateAccountDto {
-  @ApiProperty()
+export class UpdateAccountDto {
+  @ApiProperty({ required: true })
   @IsString()
-  name: string
+  @IsOptional()
+  name?: string
 
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   iban?: string
 
-  @ApiProperty({ enum: AccountType })
+  @ApiProperty({ enum: AccountType, required: false })
   @IsEnum(AccountType)
-  type: AccountType
+  @IsOptional()
+  type?: AccountType
 
   @ApiProperty({ required: false })
   @IsUUID(undefined, { each: true })

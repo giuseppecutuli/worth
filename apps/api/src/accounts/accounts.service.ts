@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '@prisma/prisma.service'
 import { CreateAccountDto } from './dtos/requests/create.dto'
 import { User } from '@users/entities'
-import { AccountListDto } from './dtos/requests'
+import { AccountListDto, UpdateAccountDto } from './dtos/requests'
 import { Prisma } from '@prisma/client'
 import { PaginatedDto } from '@common/dtos'
 import { Account } from './entities'
@@ -86,7 +86,7 @@ export class AccountsService {
       data: {
         ...data,
         categories: {
-          create: data.categories.map((id) => ({
+          create: data.categories?.map((id) => ({
             category_id: id,
           })),
         },
@@ -95,5 +95,40 @@ export class AccountsService {
     })
 
     return account
+  }
+
+  /**
+   * Update an account
+   *
+   * @param id - Account ID
+   * @param data - Account data
+   * @param user - User
+   * @returns Updated account
+   */
+  async update(id: string, data: UpdateAccountDto, user: User): Promise<Account> {
+    const account = await this.prisma.account.update({
+      where: {
+        id,
+        user_id: user.id,
+      },
+      data: {
+        ...data,
+        categories: {
+          create: data.categories?.map((id) => ({
+            category_id: id,
+          })),
+        },
+      },
+    })
+
+    if (!account) {
+      throw new NotFoundException()
+    }
+
+    return account
+  }
+
+  async delete(id: string, user: User): Promise<void> {
+    await this.prisma.account.delete({ where: { id, user_id: user.id } })
   }
 }
