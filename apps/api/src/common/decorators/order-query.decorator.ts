@@ -8,6 +8,7 @@ export function OrderQuery(allowedFields: string[], validationOptions?: Validati
   return applyDecorators(
     ApiProperty({
       type: String,
+      required: false,
       example: `${allowedFields[0]}:desc`,
       description: `Order by ${allowedFields.join(', ')}, with direction (asc or desc).`,
     }),
