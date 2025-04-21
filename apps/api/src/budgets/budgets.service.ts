@@ -1,30 +1,32 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '@prisma/prisma.service'
-import { CreateAccountDto } from './dtos/requests/create.dto'
 import { User } from '@users/entities'
-import { AccountListDto, UpdateAccountDto } from './dtos/requests'
+import { BudgetListDto, CreateBudgetDto, UpdateBudgetDto } from './dtos/requests'
 import { Prisma } from '@prisma/client'
 import { PaginatedDto } from '@common/dtos'
-import { Account } from './entities'
+import { Budget } from './entities'
 
 @Injectable()
-export class AccountsService {
+export class BudgetsService {
   constructor(private readonly prisma: PrismaService) {}
 
   /**
-   * List accounts
+   * List budgets
    *
    * @param query - Query params
    * @param user - User
-   * @returns List of accounts
+   * @returns List of budgets
    */
-  async list(query: AccountListDto, user: User): Promise<PaginatedDto<Account>> {
-    const where: Prisma.AccountWhereInput = {
+  async list(query: BudgetListDto, user: User): Promise<PaginatedDto<Budget>> {
+    const where: Prisma.BudgetWhereInput = {
       user_id: user.id,
       name: {
         contains: query.name,
       },
-      type: query.type,
+      amount: {
+        gte: query.min_amount,
+        lte: query.max_amount,
+      },
       categories: {
         some: {
           category_id: {
@@ -34,13 +36,13 @@ export class AccountsService {
       },
     }
 
-    const orderBy: Prisma.AccountOrderByWithRelationInput = {
+    const orderBy: Prisma.BudgetOrderByWithRelationInput = {
       [query.order.field]: query.order.direction,
     }
 
     const [count, data] = await Promise.all([
-      this.prisma.account.count({ where }),
-      this.prisma.account.findMany({
+      this.prisma.budget.count({ where }),
+      this.prisma.budget.findMany({
         where,
         orderBy,
         take: query.limit,
@@ -58,36 +60,36 @@ export class AccountsService {
   }
 
   /**
-   * Get account by ID
+   * Get budget by ID
    *
-   * @param id - Account ID
+   * @param id - Budget ID
    * @param user - User
-   * @returns Account
+   * @returns Budget
    */
-  async get(id: string, user: User): Promise<Account> {
-    const account = await this.prisma.account.findUnique({
+  async get(id: string, user: User): Promise<Budget> {
+    const budget = await this.prisma.budget.findUnique({
       where: {
         id,
         user_id: user.id,
       },
     })
 
-    if (!account) {
+    if (!budget) {
       throw new NotFoundException()
     }
 
-    return account
+    return budget
   }
 
   /**
-   * Create an account
+   * Create an budget
    *
-   * @param data - Account data
+   * @param data - Budget data
    * @param user - User
-   * @returns Created account
+   * @returns Created budget
    */
-  async create(data: CreateAccountDto, user: User): Promise<Account> {
-    const account = await this.prisma.account.create({
+  async create(data: CreateBudgetDto, user: User): Promise<Budget> {
+    const budget = await this.prisma.budget.create({
       data: {
         ...data,
         categories: {
@@ -99,19 +101,19 @@ export class AccountsService {
       },
     })
 
-    return account
+    return budget
   }
 
   /**
-   * Update an account
+   * Update an budget
    *
-   * @param id - Account ID
-   * @param data - Account data
+   * @param id - Budget ID
+   * @param data - Budget data
    * @param user - User
-   * @returns Updated account
+   * @returns Updated budget
    */
-  async update(id: string, data: UpdateAccountDto, user: User): Promise<Account> {
-    const account = await this.prisma.account.update({
+  async update(id: string, data: UpdateBudgetDto, user: User): Promise<Budget> {
+    const budget = await this.prisma.budget.update({
       where: {
         id,
         user_id: user.id,
@@ -127,20 +129,20 @@ export class AccountsService {
       },
     })
 
-    if (!account) {
+    if (!budget) {
       throw new NotFoundException()
     }
 
-    return account
+    return budget
   }
 
   /**
-   * Delete an account
+   * Delete an budget
    *
-   * @param id - Account ID
+   * @param id - Budget ID
    * @param user - User
    */
   async delete(id: string, user: User): Promise<void> {
-    await this.prisma.account.delete({ where: { id, user_id: user.id } })
+    await this.prisma.budget.delete({ where: { id, user_id: user.id } })
   }
 }

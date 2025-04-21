@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { AccountType } from '@prisma/client'
 import { ExistOnDb } from '@prisma/decorators/exist-on-db.decorator'
-import { IsEnum, IsOptional, IsString, IsUUID } from 'class-validator'
+import { IsArray, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator'
 
 export class CreateAccountDto {
   @ApiProperty()
@@ -19,6 +19,7 @@ export class CreateAccountDto {
 
   @ApiProperty({ required: false })
   @IsUUID(undefined, { each: true })
+  @IsArray()
   @IsOptional()
   @ExistOnDb({ entity: 'accountCategory', field: 'id' })
   categories?: string[]

@@ -88,7 +88,7 @@ model AccountCategoriesOnAccounts {
 model Account {
   id                       String                  @id @default(uuid())
   name                     String
-  iban                     String?                 @unique
+  iban                     String?
   type                     AccountType             @default(BANK)
   transactions             Transaction[]
   investments_transactions InvestmentTransaction[]
@@ -102,6 +102,7 @@ model Account {
   updated_at DateTime @updatedAt
 
   @@map("accounts")
+  @@unique([iban, user_id])
 }
 
 enum TransactionType {
@@ -186,6 +187,7 @@ model Asset {
   updated_at              DateTime                @updatedAt
 
   @@map("assets")
+  @@unique([symbol, user_id])
 }
 
 enum InvestmentTransactionType {
@@ -226,6 +228,8 @@ model BudgetCategoriesOnBudgets {
 
 model Budget {
   id            String      @id @default(uuid())
+  name          String
+  description   String?
   user          User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
   user_id       String
   start_date    DateTime

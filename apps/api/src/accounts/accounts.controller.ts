@@ -28,6 +28,13 @@ export class AccountsController {
     return this.service.list(query, user)
   }
 
+  /**
+   * Get a account by ID
+   *
+   * @param id - Account ID
+   * @param user - User
+   * @returns Account
+   */
   @Get(':id')
   @UseAuth()
   @ApiOkResponse({ type: Account })

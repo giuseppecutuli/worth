@@ -1,3 +1,5 @@
 export * from './logger'
 export * from './utils'
 export * from './dtos'
+export * from './decorators'
+export * from './types'

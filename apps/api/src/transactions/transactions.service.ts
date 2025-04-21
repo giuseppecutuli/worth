@@ -40,10 +40,15 @@ export class TransactionsService {
       currency: query.currency,
     }
 
+    const orderBy: Prisma.TransactionOrderByWithRelationInput = {
+      [query.order.field]: query.order.direction,
+    }
+
     const [count, data] = await Promise.all([
       this.prisma.transaction.count({ where }),
       this.prisma.transaction.findMany({
         where,
+        orderBy,
         take: query.limit,
         skip: query.page * query.limit,
       }),

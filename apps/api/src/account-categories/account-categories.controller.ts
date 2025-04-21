@@ -1,12 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
-import { AccountCategoryListDto, CreateAccountCategoryDto } from './dtos/requests'
+import { AccountCategoryListDto, CreateAccountCategoryDto, UpdateAccountCategoryDto } from './dtos/requests'
 import { AccountCategoriesService } from './account-categories.service'
 import { UseAuth, UseUser } from '@auth/decorators'
 import { User } from '@users/entities'
 import { ApiPaginatedResponse } from '@common/utils/swagger'
 import { AccountCategory } from './entities'
 import { ApiOkResponse } from '@nestjs/swagger'
-import { UpdateAccountCategoryDto } from './dtos/requests/update.dto'
 
 @Controller('account-categories')
 export class AccountCategoriesController {

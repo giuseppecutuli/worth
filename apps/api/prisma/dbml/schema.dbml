@@ -58,7 +58,7 @@ Table account_categories_on_accounts {
 Table accounts {
   id String [pk]
   name String [not null]
-  iban String [unique]
+  iban String
   type AccountType [not null, default: 'BANK']
   transactions transactions [not null]
   investments_transactions investment_transactions [not null]
@@ -67,6 +67,10 @@ Table accounts {
   user_id String [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [not null]
+
+  indexes {
+    (iban, user_id) [unique]
+  }
 }
 
 Table transaction_categories {
@@ -118,6 +122,10 @@ Table assets {
   user_id String [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [not null]
+
+  indexes {
+    (symbol, user_id) [unique]
+  }
 }
 
 Table investment_transactions {
@@ -150,6 +158,8 @@ Table budget_categories_on_budgets {
 
 Table budgets {
   id String [pk]
+  name String [not null]
+  description String
   user users [not null]
   user_id String [not null]
   start_date DateTime [not null]

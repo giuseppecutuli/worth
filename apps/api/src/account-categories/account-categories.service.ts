@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '@prisma/prisma.service'
 import { Prisma } from '@prisma/client'
-import { CreateAccountCategoryDto, AccountCategoryListDto } from './dtos/requests'
+import { CreateAccountCategoryDto, AccountCategoryListDto, UpdateAccountCategoryDto } from './dtos/requests'
 import { User } from '@users/entities'
 import { PaginatedDto } from '@common/dtos'
 import { AccountCategory } from './entities'
@@ -25,10 +25,15 @@ export class AccountCategoriesService {
       user_id: user.id,
     }
 
+    const orderBy: Prisma.AccountCategoryOrderByWithRelationInput = {
+      [query.order.field]: query.order.direction,
+    }
+
     const [count, data] = await Promise.all([
       this.prisma.accountCategory.count({ where }),
       this.prisma.accountCategory.findMany({
         where,
+        orderBy,
         take: query.limit,
         skip: query.page * query.limit,
       }),
@@ -88,7 +93,7 @@ export class AccountCategoriesService {
    * @returns Updated account category
    * @throws NotFoundException
    */
-  async update(id: string, data: CreateAccountCategoryDto, user: User): Promise<AccountCategory> {
+  async update(id: string, data: UpdateAccountCategoryDto, user: User): Promise<AccountCategory> {
     const category = await this.prisma.accountCategory.update({
       where: { id, user_id: user.id },
       data,

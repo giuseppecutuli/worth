@@ -25,10 +25,15 @@ export class TransactionCategoriesService {
       user_id: user.id,
     }
 
+    const orderBy: Prisma.TransactionCategoryOrderByWithRelationInput = {
+      [query.order.field]: query.order.direction,
+    }
+
     const [count, data] = await Promise.all([
       this.prisma.transactionCategory.count({ where }),
       this.prisma.transactionCategory.findMany({
         where,
+        orderBy,
         take: query.limit,
         skip: query.page * query.limit,
       }),

@@ -4,12 +4,14 @@ import { AuthModule } from '@auth/auth.module'
 import { PrismaModule } from '@prisma/prisma.module'
 import { PrismaExistValidator } from '@prisma/decorators/exist-on-db.decorator'
 
-import configuration from './config/configuration'
+import configuration from '@config/configuration'
 import { UsersModule } from '@users/users.module'
-import { TransactionsModule } from './transactions/transactions.module'
+import { TransactionsModule } from '@transactions/transactions.module'
 import { AccountsModule } from '@accounts/accounts.module'
 import { AccountCategoriesModule } from '@account-categories/account-categories.module'
-import { TransactionCategoriesModule } from './transaction-categories/transaction-categories.module'
+import { TransactionCategoriesModule } from '@transaction-categories/transaction-categories.module'
+import { AssetsModule } from '@assets/assets.module'
+import { BudgetsModule } from '@budgets/budgets.module'
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { TransactionCategoriesModule } from './transaction-categories/transactio
     AccountsModule,
     AccountCategoriesModule,
     TransactionCategoriesModule,
+    AssetsModule,
+    BudgetsModule,
   ],
   providers: [PrismaExistValidator],
   controllers: [],
