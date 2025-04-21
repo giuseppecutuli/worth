@@ -12,6 +12,13 @@ import { UpdateAccountCategoryDto } from './dtos/requests/update.dto'
 export class AccountCategoriesController {
   constructor(private readonly service: AccountCategoriesService) {}
 
+  /**
+   * List account categories
+   *
+   * @param query - Query params
+   * @param user - User
+   * @returns Paginated account categories
+   */
   @Get()
   @UseAuth()
   @ApiPaginatedResponse(AccountCategory)
@@ -19,6 +26,13 @@ export class AccountCategoriesController {
     return this.service.list(query, user)
   }
 
+  /**
+   * Get account category by ID
+   *
+   * @param id - Account category ID
+   * @param user - User
+   * @returns Account category
+   */
   @Get(':id')
   @UseAuth()
   @ApiOkResponse({ type: AccountCategory })
@@ -26,6 +40,13 @@ export class AccountCategoriesController {
     return this.service.get(id, user)
   }
 
+  /**
+   * Create account category
+   *
+   * @param body - Account category data
+   * @param user - User
+   * @returns Created account category
+   */
   @Post()
   @UseAuth()
   @ApiOkResponse({ type: AccountCategory })
@@ -33,6 +54,14 @@ export class AccountCategoriesController {
     return this.service.create(body, user)
   }
 
+  /**
+   * Update account category
+   *
+   * @param id - Account category ID
+   * @param body - Account category data
+   * @param user - User
+   * @returns Updated account category
+   */
   @Put(':id')
   @UseAuth()
   @ApiOkResponse({ type: AccountCategory })
@@ -40,6 +69,13 @@ export class AccountCategoriesController {
     return this.service.update(id, body, user)
   }
 
+  /**
+   * Delete account category
+   *
+   * @param id - Account category ID
+   * @param user - User
+   * @returns Deleted account category
+   */
   @Delete(':id')
   @UseAuth()
   @ApiOkResponse()

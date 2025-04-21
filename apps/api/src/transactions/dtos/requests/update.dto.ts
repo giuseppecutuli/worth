@@ -4,38 +4,45 @@ import { ExistOnDb } from '@prisma/decorators/exist-on-db.decorator'
 import { Currency, TransactionType } from '@prisma/client'
 import { Type } from 'class-transformer'
 
-export class CreateTransactionDto {
-  @ApiProperty()
+export class UpdateTransactionDto {
+  @ApiProperty({ required: false })
+  @IsOptional()
   @IsNumber()
-  amount: number
+  amount?: number
 
-  @ApiProperty({ enum: Currency, default: Currency.EUR })
+  @ApiProperty({ enum: Currency, required: false })
+  @IsOptional()
   @IsEnum(Currency)
   @IsOptional()
-  currency: Currency = Currency.EUR
+  currency?: Currency
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
+  @IsOptional()
   @IsString()
-  description: string
+  description?: string
 
-  @ApiProperty({ enum: TransactionType })
+  @ApiProperty({ enum: TransactionType, required: false })
+  @IsOptional()
   @IsEnum(TransactionType)
-  type: TransactionType
+  type?: TransactionType
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
+  @IsOptional()
   @IsDate()
   @Type(() => Date)
-  date: Date
+  date?: Date
 
   @ApiProperty({ required: false, isArray: true })
+  @IsOptional()
   @IsUUID(undefined, { each: true })
   @IsArray()
   @IsOptional()
   @ExistOnDb({ entity: 'transactionCategory', field: 'id' })
   categories?: string[]
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
+  @IsOptional()
   @IsUUID()
   @ExistOnDb({ entity: 'account', field: 'id' })
-  account_id: string
+  account_id?: string
 }

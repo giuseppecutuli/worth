@@ -10,6 +10,13 @@ import { AccountCategory } from './entities'
 export class AccountCategoriesService {
   constructor(private readonly prisma: PrismaService) {}
 
+  /**
+   * List account categories
+   *
+   * @param query - Query params
+   * @param user - User
+   * @returns Paginated account categories
+   */
   async list(query: AccountCategoryListDto, user: User): Promise<PaginatedDto<AccountCategory>> {
     const where: Prisma.AccountCategoryWhereInput = {
       name: {
@@ -36,6 +43,14 @@ export class AccountCategoriesService {
     }
   }
 
+  /**
+   * Get account category by ID
+   *
+   * @param id - Account category ID
+   * @param user - User
+   * @returns Account category
+   * @throws NotFoundException
+   */
   async get(id: string, user: User): Promise<AccountCategory> {
     const category = await this.prisma.accountCategory.findUnique({ where: { id, user_id: user.id } })
 
@@ -46,6 +61,13 @@ export class AccountCategoriesService {
     return category
   }
 
+  /**
+   * Create a new account category
+   *
+   * @param data - Account category data
+   * @param user - User
+   * @returns Created account category
+   */
   async create(data: CreateAccountCategoryDto, user: User): Promise<AccountCategory> {
     const category = await this.prisma.accountCategory.create({
       data: {
@@ -57,6 +79,15 @@ export class AccountCategoriesService {
     return category
   }
 
+  /**
+   * Update an account category
+   *
+   * @param id - Account category ID
+   * @param data - Account category data
+   * @param user - User
+   * @returns Updated account category
+   * @throws NotFoundException
+   */
   async update(id: string, data: CreateAccountCategoryDto, user: User): Promise<AccountCategory> {
     const category = await this.prisma.accountCategory.update({
       where: { id, user_id: user.id },
@@ -70,6 +101,12 @@ export class AccountCategoriesService {
     return category
   }
 
+  /**
+   * Delete an account category
+   *
+   * @param id - Account category ID
+   * @param user - User
+   */
   async delete(id: string, user: User): Promise<void> {
     await this.prisma.accountCategory.delete({ where: { id, user_id: user.id } })
   }

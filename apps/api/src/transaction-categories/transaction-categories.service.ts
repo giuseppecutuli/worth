@@ -10,6 +10,13 @@ import { TransactionCategory } from './entities'
 export class TransactionCategoriesService {
   constructor(private readonly prisma: PrismaService) {}
 
+  /**
+   * List transaction categories
+   *
+   * @param query - Query params
+   * @param user - User
+   * @returns Paginated transaction categories
+   */
   async list(query: TransactionCategoryListDto, user: User): Promise<PaginatedDto<TransactionCategory>> {
     const where: Prisma.TransactionCategoryWhereInput = {
       name: {
@@ -36,6 +43,14 @@ export class TransactionCategoriesService {
     }
   }
 
+  /**
+   * Get transaction category by ID
+   *
+   * @param id - Transaction category ID
+   * @param user - User
+   * @returns Transaction category
+   * @throws NotFoundException
+   */
   async get(id: string, user: User): Promise<TransactionCategory> {
     const category = await this.prisma.transactionCategory.findUnique({ where: { id, user_id: user.id } })
 
@@ -46,6 +61,13 @@ export class TransactionCategoriesService {
     return category
   }
 
+  /**
+   * Create transaction category
+   *
+   * @param data - Transaction category data
+   * @param user - User
+   * @returns Created transaction category
+   */
   async create(data: CreateTransactionCategoryDto, user: User): Promise<TransactionCategory> {
     const category = await this.prisma.transactionCategory.create({
       data: {
@@ -57,6 +79,15 @@ export class TransactionCategoriesService {
     return category
   }
 
+  /**
+   * Update transaction category
+   *
+   * @param id - Transaction category ID
+   * @param data - Transaction category data
+   * @param user - User
+   * @returns Updated transaction category
+   * @throws NotFoundException
+   */
   async update(id: string, data: UpdateTransactionCategoryDto, user: User): Promise<TransactionCategory> {
     const category = await this.prisma.transactionCategory.update({
       where: { id, user_id: user.id },
@@ -70,6 +101,13 @@ export class TransactionCategoriesService {
     return category
   }
 
+  /**
+   * Delete transaction category
+   *
+   * @param id - Transaction category ID
+   * @param user - User
+   * @returns Deleted transaction category
+   */
   async delete(id: string, user: User): Promise<void> {
     await this.prisma.transactionCategory.delete({ where: { id, user_id: user.id } })
   }

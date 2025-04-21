@@ -60,7 +60,7 @@ export class AccountsService {
    * @returns Account
    */
   async get(id: string, user: User): Promise<Account> {
-    const account = await this.prisma.account.findFirst({
+    const account = await this.prisma.account.findUnique({
       where: {
         id,
         user_id: user.id,
@@ -114,6 +114,7 @@ export class AccountsService {
       data: {
         ...data,
         categories: {
+          deleteMany: {},
           create: data.categories?.map((id) => ({
             category_id: id,
           })),

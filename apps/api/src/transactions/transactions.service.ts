@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { PrismaService } from '@prisma/prisma.service'
 import { User } from '@users/entities'
-import { CreateTransactionDto, TransactionListDto } from './dtos/requests'
+import { CreateTransactionDto, TransactionListDto, UpdateTransactionDto } from './dtos/requests'
 import { Transaction } from './entities'
 import { PaginatedDto } from '@common/dtos'
 import { Prisma } from '@prisma/client'
@@ -79,5 +79,67 @@ export class TransactionsService {
     })
 
     return transaction
+  }
+
+  /**
+   * Update a transaction
+   *
+   * @param id - Transaction ID
+   * @param data - Transaction data
+   * @param user - User
+   * @returns Transaction
+   * @throws NotFoundException
+   */
+  async get(id: string, user: User): Promise<Transaction> {
+    const transaction = await this.prisma.transaction.findUnique({ where: { id, user_id: user.id } })
+
+    if (!transaction) {
+      throw new NotFoundException()
+    }
+
+    return transaction
+  }
+
+  /**
+   * Update a transaction
+   *
+   * @param id - Transaction ID
+   * @param data - Transaction data
+   * @param user - User
+   * @returns Transaction
+   * @throws NotFoundException
+   */
+  async update(id: string, data: UpdateTransactionDto, user: User): Promise<Transaction> {
+    const transaction = await this.prisma.transaction.update({
+      where: { id, user_id: user.id },
+      data: {
+        ...data,
+        categories: {
+          deleteMany: {},
+          create: data.categories?.map((id) => ({
+            category_id: id,
+          })),
+        },
+      },
+    })
+
+    if (!transaction) {
+      throw new NotFoundException()
+    }
+
+    return transaction
+  }
+
+  /**
+   * Delete a transaction
+   *
+   * @param id - Transaction ID
+   * @param user - User
+   * @returns Transaction
+   */
+  async delete(id: string, user: User): Promise<void> {
+    await this.prisma.transaction.delete({
+      where: { id, user_id: user.id },
+    })
   }
 }
