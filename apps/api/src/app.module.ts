@@ -12,6 +12,7 @@ import { AccountCategoriesModule } from '@account-categories/account-categories.
 import { TransactionCategoriesModule } from '@transaction-categories/transaction-categories.module'
 import { AssetsModule } from '@assets/assets.module'
 import { BudgetsModule } from '@budgets/budgets.module'
+import { InvestmentTransactionsModule } from '@investment-transactions/investment-transactions.module'
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { BudgetsModule } from '@budgets/budgets.module'
     TransactionCategoriesModule,
     AssetsModule,
     BudgetsModule,
+    InvestmentTransactionsModule,
   ],
   providers: [PrismaExistValidator],
   controllers: [],

@@ -15,6 +15,7 @@
       "@transactions/*": ["src/transactions/*"],
       "@assets/*": ["src/assets/*"],
       "@budgets/*": ["src/budgets/*"],
+      "@investment-transactions/*": ["src/investment-transactions/*"],
     }
   }
 }
