@@ -4,10 +4,17 @@ import { JwtService } from '@nestjs/jwt'
 import { AuthService } from './auth.service'
 import { ConfigService } from '@nestjs/config'
 import { PasswordService } from './password.service'
-import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignUpDto } from '@/auth/dtos/requests'
+import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignOutDto, SignUpDto } from '@/auth/dtos/requests'
 import { RefreshToken, User } from '@prisma/client'
 import { PrismaService } from '@/prisma/prisma.service'
 import { AuthMessages } from '@/auth/auth.constants'
+
+jest.mock('jwt-decode', () => ({
+  jwtDecode: jest.fn().mockReturnValue({
+    exp: 1,
+  }),
+  JwtPayload: class JwtPayload {},
+}))
 
 describe('AuthService', () => {
   let authService: AuthService
@@ -172,7 +179,7 @@ describe('AuthService', () => {
 
       jest.spyOn(authService as any, 'calculateExpirationDate').mockReturnValue(new Date())
 
-      jest.spyOn(authService as any, 'createAccessToken').mockResolvedValue(accessToken)
+      jest.spyOn(authService as any, 'createAccessToken').mockReturnValue(accessToken)
 
       const result = await authService.refreshToken(refreshTokenDto)
 
@@ -197,18 +204,21 @@ describe('AuthService', () => {
       jest.spyOn(jwtService, 'verify').mockReturnValue({ userId: 'userId' })
 
       const user: User = { id: 'userId' } as User
+      const data: SignOutDto = { refresh_token: 'token_id' }
 
-      jest.spyOn(prisma.user, 'update').mockResolvedValue({} as User)
+      await authService.signOut(data, user)
 
-      await authService.signOut({ refresh_token: 'token' }, user)
-
-      expect(prisma.user.update).toHaveBeenCalledWith({ _id: 'userId' }, { $pull: { refresh_tokens: { token: 'token' } } })
+      expect(prisma.refreshToken.delete).toHaveBeenCalledWith({
+        where: {
+          token: data.refresh_token,
+        },
+      })
     })
   })
 
   describe('forgotPassword', () => {
     it('should throw NotFoundException if user is not found', async () => {
-      jest.spyOn(userModel, 'findOne').mockResolvedValue(null)
+      jest.spyOn(prisma.user, 'findUnique').mockResolvedValue(null)
 
       const forgotPasswordDto: ForgotPasswordDto = { email: 'email' }
 
@@ -216,21 +226,20 @@ describe('AuthService', () => {
     })
 
     it('should return a new password reset token', async () => {
-      const mockSave = jest.fn()
-      jest.spyOn(userModel, 'findOne').mockResolvedValue({ _id: 'userId', save: mockSave } as any)
+      jest.spyOn(prisma.user, 'findUnique').mockResolvedValue({ id: 'userId' } as User)
 
       const forgotPasswordDto: ForgotPasswordDto = { email: 'email' }
 
       const result = await authService.forgotPassword(forgotPasswordDto)
 
-      expect(mockSave).toHaveBeenCalled()
+      expect(prisma.user.update).toHaveBeenCalled()
       expect(result).toEqual(AuthMessages.RESET_TOKEN_SENT)
     })
   })
 
   describe('resetPassword', () => {
     it('should throw NotFoundException if token is invalid', async () => {
-      jest.spyOn(userModel, 'findOne').mockResolvedValue(null)
+      jest.spyOn(prisma.user, 'findFirst').mockResolvedValue(null)
 
       const resetPasswordDto: ResetPasswordDto = { token: 'token', password: 'password' }
 
@@ -238,19 +247,24 @@ describe('AuthService', () => {
     })
 
     it('should reset password if token is valid', async () => {
-      const mockSave = jest.fn()
-      const user = { _id: 'userId', reset_token: 'token', reset_token_expiration: new Date(), password: 'password', save: mockSave }
-      jest.spyOn(userModel, 'findOne').mockResolvedValue(user)
+      const user = { id: 'userId', reset_token: 'token', reset_token_expiration: new Date(), password: 'password' } as User
+      jest.spyOn(prisma.user, 'findFirst').mockResolvedValue(user)
       jest.spyOn(PasswordService, 'hashPassword').mockResolvedValue('hashedPassword')
 
       const resetPasswordDto: ResetPasswordDto = { token: 'token', password: 'password' }
 
       await authService.resetPassword(resetPasswordDto)
 
-      expect(user.reset_token).toBeNull()
-      expect(user.reset_token_expiration).toBeNull()
-      expect(user.password).toBe('hashedPassword')
-      expect(mockSave).toHaveBeenCalled()
+      expect(prisma.user.update).toHaveBeenCalledWith({
+        where: {
+          id: 'userId',
+        },
+        data: {
+          password: 'hashedPassword',
+          reset_token: null,
+          reset_token_expiration: null,
+        },
+      })
     })
   })
 
@@ -260,25 +274,64 @@ describe('AuthService', () => {
       const accessToken = 'accessToken'
       const refreshToken = 'refreshToken'
 
-      jest.spyOn(jwtService, 'sign').mockImplementation((payload, options) => {
-        if (options?.secret === 'refreshSecret') {
-          return refreshToken
-        }
-        return accessToken
+      jest.spyOn(authService as any, 'createAccessToken').mockReturnValue(accessToken)
+      jest.spyOn(authService as any, 'createRefreshToken').mockReturnValue({
+        token: refreshToken,
+        expirationDate: new Date(),
       })
-      jest.spyOn(authService as any, 'calculateExpirationDate').mockReturnValue(new Date())
 
-      const result = await (authService as any).createTokens(userId)
+      const result = await authService['createTokens'](userId)
 
-      expect(userModel.updateOne).toHaveBeenCalledWith(
-        { _id: 'userId' },
-        { $push: { refresh_tokens: { token: refreshToken, expiration_date: expect.any(Date) } } },
-      )
       expect(result).toEqual({
         accessToken,
         refreshToken,
         expirationDate: expect.any(Date),
       })
+    })
+  })
+
+  describe('createAccessToken', () => {
+    it('should return access token', () => {
+      const payload = { userId: 'userId' }
+
+      jest.spyOn(jwtService, 'sign').mockReturnValue('accessToken')
+
+      const result = authService['createAccessToken'](payload)
+
+      expect(result).toEqual('accessToken')
+    })
+  })
+
+  describe('createRefreshToken', () => {
+    it('should return refresh token with expiration date', async () => {
+      const payload = { userId: 'userId' }
+
+      jest.spyOn(jwtService, 'sign').mockReturnValue('refreshToken')
+      jest.spyOn(authService as any, 'calculateExpirationDate').mockReturnValue(new Date())
+
+      const result = await authService['createRefreshToken'](payload)
+
+      expect(result).toEqual({
+        token: 'refreshToken',
+        expirationDate: expect.any(Date),
+      })
+      expect(prisma.refreshToken.create).toHaveBeenCalledWith({
+        data: {
+          token: 'refreshToken',
+          user_id: 'userId',
+          expiration_date: expect.any(Date),
+        },
+      })
+    })
+  })
+
+  describe('calculateExpirationDate', () => {
+    it('should return expiration date', () => {
+      const token = 'token'
+
+      const result = authService['calculateExpirationDate'](token)
+
+      expect(result).toBeInstanceOf(Date)
     })
   })
 })

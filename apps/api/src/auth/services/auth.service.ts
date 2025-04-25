@@ -98,7 +98,7 @@ export class AuthService {
       throw new ConflictException(AuthErrors.REFRESH_TOKEN_NOT_FOUND)
     }
 
-    const accessToken = await this.createAccessToken({ userId })
+    const accessToken = this.createAccessToken({ userId })
     const expirationDate = this.calculateExpirationDate(data.token)
 
     return {
