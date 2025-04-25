@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { PrismaService } from '@prisma/prisma.service'
-import { User } from '@users/entities'
+import { PrismaService } from '@/prisma/prisma.service'
+import { User } from '@/users/entities'
 import { CreateTransactionDto, TransactionListDto, UpdateTransactionDto } from './dtos/requests'
 import { Transaction } from './entities'
-import { PaginatedDto } from '@common/dtos'
+import { PaginatedDto } from '@/common/dtos'
 import { Prisma } from '@prisma/client'
 
 @Injectable()

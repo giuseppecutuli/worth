@@ -4,10 +4,10 @@ import { JwtService } from '@nestjs/jwt'
 import { AuthService } from './auth.service'
 import { ConfigService } from '@nestjs/config'
 import { PasswordService } from './password.service'
-import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignUpDto } from '@auth/dtos/requests'
+import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignUpDto } from '@/auth/dtos/requests'
 import { RefreshToken, User } from '@prisma/client'
-import { PrismaService } from '@prisma/prisma.service'
-import { AuthMessages } from '@auth/auth.constants'
+import { PrismaService } from '@/prisma/prisma.service'
+import { AuthMessages } from '@/auth/auth.constants'
 
 describe('AuthService', () => {
   let authService: AuthService
@@ -188,19 +188,19 @@ describe('AuthService', () => {
     it('should throw ConflictException if userId is invalid', async () => {
       jest.spyOn(jwtService, 'verify').mockReturnValue({ userId: 'userId' })
 
-      const user = { id: 'anotherUserId' }
+      const user = { id: 'anotherUserId' } as User
 
-      await expect(authService.signOut({ refresh_token: 'token' }, user as any)).rejects.toThrow(ConflictException)
+      await expect(authService.signOut({ refresh_token: 'token' }, user)).rejects.toThrow(ConflictException)
     })
 
     it('should remove refresh token from user', async () => {
       jest.spyOn(jwtService, 'verify').mockReturnValue({ userId: 'userId' })
 
-      const user = { id: 'userId' }
+      const user: User = { id: 'userId' } as User
 
       jest.spyOn(prisma.user, 'update').mockResolvedValue({} as User)
 
-      await authService.signOut({ refresh_token: 'token' }, user as any)
+      await authService.signOut({ refresh_token: 'token' }, user)
 
       expect(prisma.user.update).toHaveBeenCalledWith({ _id: 'userId' }, { $pull: { refresh_tokens: { token: 'token' } } })
     })

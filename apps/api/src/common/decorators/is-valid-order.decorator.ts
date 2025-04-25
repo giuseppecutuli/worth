@@ -1,5 +1,5 @@
-import { OrderDto } from '@common/dtos'
-import { SortDirection } from '@common/types'
+import { OrderDto } from '@/common/dtos'
+import { SortDirection } from '@/common/types'
 import { registerDecorator, ValidationArguments, ValidationOptions } from 'class-validator'
 
 export function IsValidOrder(allowedFields: string[], validationOptions?: ValidationOptions): PropertyDecorator {

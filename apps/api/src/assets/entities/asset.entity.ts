@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { AssetType, Asset as PrismaAsset } from '@prisma/client'
-import { BaseEntityDto } from '@common/dtos'
+import { BaseEntityDto } from '@/common/dtos'
 
 export class Asset extends BaseEntityDto implements PrismaAsset {
   @ApiProperty()

@@ -1,7 +1,7 @@
-import { PaginateDto } from '@common/dtos'
+import { PaginateDto } from '@/common/dtos'
 import { ApiProperty } from '@nestjs/swagger'
 import { AccountType } from '@prisma/client'
-import { ExistOnDb } from '@prisma/decorators/exist-on-db.decorator'
+import { ExistOnDb } from '@/prisma/decorators/exist-on-db.decorator'
 import { IsArray, IsEnum, IsOptional, IsString, IsUUID } from 'class-validator'
 
 export class AccountListDto extends PaginateDto {

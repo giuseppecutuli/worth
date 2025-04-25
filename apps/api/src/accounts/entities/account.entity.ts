@@ -1,4 +1,4 @@
-import { BaseEntityDto } from '@common/dtos'
+import { BaseEntityDto } from '@/common/dtos'
 import { ApiProperty } from '@nestjs/swagger'
 import { AccountType, Account as PrismaAccount } from '@prisma/client'
 

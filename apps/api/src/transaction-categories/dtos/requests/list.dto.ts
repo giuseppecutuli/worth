@@ -1,4 +1,4 @@
-import { PaginateDto } from '@common/dtos'
+import { PaginateDto } from '@/common/dtos'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsOptional, IsString } from 'class-validator'
 

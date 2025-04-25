@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsOptional, Max, Min } from 'class-validator'
-import { SortDirection } from '@common/types'
+import { SortDirection } from '@/common/types'
 import { OrderDto } from './order.dto'
-import { OrderQuery } from '@common/decorators/order-query.decorator'
+import { OrderQuery } from '@/common/decorators/order-query.decorator'
 
 export const DEFAULT_ORDER_FIELDS: string[] = ['created_at', 'updated_at']
 

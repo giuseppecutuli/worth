@@ -5,7 +5,7 @@ import { UseUser } from './decorators/user.decorator'
 import { AuthService } from './services/auth.service'
 import { Token } from './dtos/responses'
 import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignOutDto, SignUpDto } from './dtos/requests'
-import { User } from '@users/entities'
+import { User } from '@/users/entities'
 
 @ApiTags('Auth')
 @Controller('auth')

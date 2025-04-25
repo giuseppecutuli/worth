@@ -1,4 +1,4 @@
-import { PaginateDto } from '@common/dtos'
+import { PaginateDto } from '@/common/dtos'
 import { ApiProperty } from '@nestjs/swagger'
 import { AssetType } from '@prisma/client'
 import { IsEnum, IsOptional, IsString } from 'class-validator'

@@ -14,7 +14,8 @@ export const config = [
     ignores: [
       'eslint.config.mjs',
       'eslint.config.js',
-      'prettier.config.mjs'
+      'prettier.config.mjs',
+      'jest.config.js'
     ],
   },
   eslint.configs.recommended,

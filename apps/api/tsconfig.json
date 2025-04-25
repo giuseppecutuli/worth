@@ -4,18 +4,7 @@
     "baseUrl": ".",
     "outDir": "./dist",
     "paths": {
-      "@auth/*": ["src/auth/*"],
-      "@common/*": ["src/common/*"],
-      "@config/*": ["src/config/*"],
-      "@prisma/*": ["src/prisma/*"],
-      "@users/*": ["src/users/*"],
-      "@accounts/*": ["src/accounts/*"],
-      "@account-categories/*": ["src/account-categories/*"],
-      "@transaction-categories/*": ["src/transaction-categories/*"],
-      "@transactions/*": ["src/transactions/*"],
-      "@assets/*": ["src/assets/*"],
-      "@budgets/*": ["src/budgets/*"],
-      "@investment-transactions/*": ["src/investment-transactions/*"],
-    }
+      "@/*": ["src/*"],
+    },
   }
 }

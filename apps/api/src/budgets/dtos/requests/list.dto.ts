@@ -1,7 +1,7 @@
-import { OrderQuery } from '@common/decorators'
-import { DEFAULT_ORDER, DEFAULT_ORDER_FIELDS, OrderDto, PaginateDto } from '@common/dtos'
+import { OrderQuery } from '@/common/decorators'
+import { DEFAULT_ORDER, DEFAULT_ORDER_FIELDS, OrderDto, PaginateDto } from '@/common/dtos'
 import { ApiProperty } from '@nestjs/swagger'
-import { ExistOnDb } from '@prisma/decorators/exist-on-db.decorator'
+import { ExistOnDb } from '@/prisma/decorators/exist-on-db.decorator'
 import { IsArray, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator'
 
 export class BudgetListDto extends PaginateDto {

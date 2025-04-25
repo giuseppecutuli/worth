@@ -1,12 +1,12 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { InvestmentTransactionsService } from './investment-transactions.service'
-import { UseAuth, UseUser } from '@auth/decorators'
-import { User } from '@users/entities'
+import { UseAuth, UseUser } from '@/auth/decorators'
+import { User } from '@/users/entities'
 import { InvestmentTransactionListDto, CreateInvestmentTransactionDto, UpdateInvestmentTransactionDto } from './dtos/requests'
-import { ApiPaginatedResponse } from '@common/utils/swagger'
+import { ApiPaginatedResponse } from '@/common/utils/swagger'
 import { InvestmentTransaction } from './entities'
-import { PaginatedDto } from '@common/dtos'
+import { PaginatedDto } from '@/common/dtos'
 
 @Controller('investment-transactions')
 @ApiTags('Investment Transactions')

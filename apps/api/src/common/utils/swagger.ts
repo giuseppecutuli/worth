@@ -1,4 +1,4 @@
-import { PaginatedDto } from '@common/dtos'
+import { PaginatedDto } from '@/common/dtos'
 import { applyDecorators, Type } from '@nestjs/common'
 import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger'
 

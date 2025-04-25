@@ -1,12 +1,12 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
-import { User } from '@users/entities'
-import { UseAuth, UseUser } from '@auth/decorators'
+import { User } from '@/users/entities'
+import { UseAuth, UseUser } from '@/auth/decorators'
 import { BudgetsService } from './budgets.service'
 import { Budget } from './entities'
-import { ApiPaginatedResponse } from '@common/utils/swagger'
+import { ApiPaginatedResponse } from '@/common/utils/swagger'
 import { BudgetListDto, CreateBudgetDto, UpdateBudgetDto } from './dtos/requests'
-import { PaginatedDto } from '@common/dtos'
+import { PaginatedDto } from '@/common/dtos'
 
 @ApiTags('Budgets')
 @Controller('budgets')

@@ -1,5 +1,5 @@
 import { Currency, Prisma, Transaction as PrismaTransaction, TransactionType } from '@prisma/client'
-import { BaseEntityDto } from '@common/dtos'
+import { BaseEntityDto } from '@/common/dtos'
 import { ApiProperty } from '@nestjs/swagger'
 
 export class Transaction extends BaseEntityDto implements PrismaTransaction {

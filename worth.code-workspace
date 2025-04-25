@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "./apps/api"
+		},
+    {
+      "path": "./apps/web"
+    }
+	],
+	"settings": {}
+}

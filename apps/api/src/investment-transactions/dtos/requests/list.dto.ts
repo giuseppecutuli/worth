@@ -1,7 +1,7 @@
-import { PaginateDto } from '@common/dtos'
+import { PaginateDto } from '@/common/dtos'
 import { ApiProperty } from '@nestjs/swagger'
 import { InvestmentTransactionType } from '@prisma/client'
-import { ExistOnDb } from '@prisma/decorators/exist-on-db.decorator'
+import { ExistOnDb } from '@/prisma/decorators/exist-on-db.decorator'
 import { Type } from 'class-transformer'
 import { IsDate, IsEnum, IsNumber, IsOptional, IsUUID } from 'class-validator'
 

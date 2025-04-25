@@ -18,5 +18,5 @@
     "strictPropertyInitialization": false,
     "moduleDetection": "force",
     "moduleResolution": "NodeNext"
-  },
+  }
 }
