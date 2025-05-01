@@ -6,6 +6,18 @@ const config = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
+  coveragePathIgnorePatterns: [
+      "main.ts",
+      "index.ts",
+      "config",
+      "node_modules",
+      ".*\\.module\\.ts$",
+      ".*\\.enum\\.ts$",
+      ".*\\.type\\.ts$",
+      ".*\\.interface\\.ts$",
+      ".*\\.dto\\.ts$",
+      ".*\\.e2e-spec\\.ts$"
+  ],
   collectCoverageFrom: ['**/*.(t|j)s'],
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
