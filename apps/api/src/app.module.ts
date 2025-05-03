@@ -13,6 +13,7 @@ import { TransactionCategoriesModule } from '@/transaction-categories/transactio
 import { AssetsModule } from '@/assets/assets.module'
 import { BudgetsModule } from '@/budgets/budgets.module'
 import { InvestmentTransactionsModule } from '@/investment-transactions/investment-transactions.module'
+import { LoggerModule } from './common'
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { InvestmentTransactionsModule } from '@/investment-transactions/investme
       load: [configuration],
       isGlobal: true,
     }),
+    LoggerModule,
     PrismaModule,
     AuthModule,
     UsersModule,

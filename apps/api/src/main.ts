@@ -7,9 +7,12 @@ import { Config } from '@/config/config.interface'
 import { AppModule } from './app.module'
 import { validationExceptionFactory } from '@/common/utils'
 import { PrismaClientExceptionFilter } from '@/prisma/filters/prisma-client-exception.filter'
+import { Logger as PinoLogger } from 'nestjs-pino'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, { bufferLogs: true })
+
+  app.useLogger(app.get(PinoLogger))
 
   const configService = app.get(ConfigService)
   const nestConfig = configService.get<Config['nest']>('nest')
@@ -54,7 +57,7 @@ async function bootstrap() {
 
   await app.listen(port)
 
-  Logger.log(`🚀 Application is running on: http://localhost:${port}`)
+  Logger.log(`Application is running on: http://localhost:${port}`)
 }
 
 bootstrap()
