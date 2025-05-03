@@ -14,5 +14,6 @@ export const validationExceptionFactory = (errors: ValidationError[]) => {
     })
     return errMsg
   }
+
   return new UnprocessableEntityException(formatError(errors))
 }
