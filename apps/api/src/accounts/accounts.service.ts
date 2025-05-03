@@ -1,26 +1,30 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { PrismaService } from '@/prisma/prisma.service'
 import { CreateAccountDto } from './dtos/requests/create.dto'
-import { User } from '@/users/entities'
 import { AccountListDto, UpdateAccountDto } from './dtos/requests'
 import { Prisma } from '@prisma/client'
-import { PaginatedDto } from '@/common/dtos'
 import { Account } from './entities'
+import { CrudService } from '@/common/services/crud.service'
 
+/**
+ * Service for accounts
+ * @extends CrudService
+ */
 @Injectable()
-export class AccountsService {
-  constructor(private readonly prisma: PrismaService) {}
+export class AccountsService extends CrudService<Account, CreateAccountDto, UpdateAccountDto, AccountListDto> {
+  constructor(prisma: PrismaService) {
+    super(prisma, 'Account')
+  }
 
   /**
-   * List accounts
+   * Build the where clause for the list query
    *
    * @param query - Query params
    * @param user - User
-   * @returns List of accounts
+   * @returns {object} - The where clause
    */
-  async list(query: AccountListDto, user: User): Promise<PaginatedDto<Account>> {
-    const where: Prisma.AccountWhereInput = {
-      user_id: user.id,
+  protected buildWhere(query: AccountListDto): Prisma.AccountWhereInput {
+    return {
       name: {
         contains: query.name,
       },
@@ -33,114 +37,40 @@ export class AccountsService {
         },
       },
     }
+  }
 
-    const orderBy: Prisma.AccountOrderByWithRelationInput = {
-      [query.order.field]: query.order.direction,
-    }
-
-    const [count, data] = await Promise.all([
-      this.prisma.account.count({ where }),
-      this.prisma.account.findMany({
-        where,
-        orderBy,
-        take: query.limit,
-        skip: query.page * query.limit,
-      }),
-    ])
-
+  /**
+   * Build the create data for the create query
+   *
+   * @param data - Create data
+   * @returns {object} - The create data
+   */
+  protected buildCreateData(data: CreateAccountDto) {
     return {
-      data,
-      count,
-      limit: query.limit,
-      page: query.page,
-      total_pages: Math.ceil(count / query.limit),
+      ...data,
+      categories: {
+        create: data.categories?.map((id) => ({
+          category_id: id,
+        })),
+      },
     }
   }
 
   /**
-   * Get account by ID
+   * Build the update data for the update query
    *
-   * @param id - Account ID
-   * @param user - User
-   * @returns Account
+   * @param data - Update data
+   * @returns {object} - The update data
    */
-  async get(id: string, user: User): Promise<Account> {
-    const account = await this.prisma.account.findUnique({
-      where: {
-        id,
-        user_id: user.id,
+  protected buildUpdateData(data: UpdateAccountDto) {
+    return {
+      ...data,
+      categories: {
+        deleteMany: {},
+        create: data.categories?.map((id) => ({
+          category_id: id,
+        })),
       },
-    })
-
-    if (!account) {
-      throw new NotFoundException()
     }
-
-    return account
-  }
-
-  /**
-   * Create an account
-   *
-   * @param data - Account data
-   * @param user - User
-   * @returns Created account
-   */
-  async create(data: CreateAccountDto, user: User): Promise<Account> {
-    const account = await this.prisma.account.create({
-      data: {
-        ...data,
-        categories: {
-          create: data.categories?.map((id) => ({
-            category_id: id,
-          })),
-        },
-        user_id: user.id,
-      },
-    })
-
-    return account
-  }
-
-  /**
-   * Update an account
-   *
-   * @param id - Account ID
-   * @param data - Account data
-   * @param user - User
-   * @returns Updated account
-   */
-  async update(id: string, data: UpdateAccountDto, user: User): Promise<Account> {
-    const account = await this.prisma.account.update({
-      where: {
-        id,
-        user_id: user.id,
-      },
-      data: {
-        ...data,
-        categories: {
-          deleteMany: {},
-          create: data.categories?.map((id) => ({
-            category_id: id,
-          })),
-        },
-      },
-    })
-
-    if (!account) {
-      throw new NotFoundException()
-    }
-
-    return account
-  }
-
-  /**
-   * Delete an account
-   *
-   * @param id - Account ID
-   * @param user - User
-   */
-  async delete(id: string, user: User): Promise<void> {
-    await this.prisma.account.delete({ where: { id, user_id: user.id } })
   }
 }

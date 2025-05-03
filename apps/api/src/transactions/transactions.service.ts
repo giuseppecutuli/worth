@@ -1,25 +1,28 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { PrismaService } from '@/prisma/prisma.service'
-import { User } from '@/users/entities'
 import { CreateTransactionDto, TransactionListDto, UpdateTransactionDto } from './dtos/requests'
 import { Transaction } from './entities'
-import { PaginatedDto } from '@/common/dtos'
 import { Prisma } from '@prisma/client'
+import { CrudService } from '@/common/services/crud.service'
 
+/**
+ * Service for transactions
+ * @extends CrudService
+ */
 @Injectable()
-export class TransactionsService {
-  constructor(private readonly prisma: PrismaService) {}
+export class TransactionsService extends CrudService<Transaction, CreateTransactionDto, UpdateTransactionDto, TransactionListDto> {
+  constructor(prisma: PrismaService) {
+    super(prisma, 'Transaction')
+  }
 
   /**
-   * List transactions
+   * Build the where clause for the list query
    *
    * @param query - Query params
-   * @param user - User
-   * @returns Paginated transactions
+   * @returns {object} - The where clause
    */
-  async list(query: TransactionListDto, user: User): Promise<PaginatedDto<Transaction>> {
-    const where: Prisma.TransactionWhereInput = {
-      user_id: user.id,
+  protected buildWhere(query: TransactionListDto): Prisma.TransactionWhereInput {
+    return {
       account_id: query.account_id,
       type: query.type,
       date: {
@@ -39,112 +42,40 @@ export class TransactionsService {
       },
       currency: query.currency,
     }
+  }
 
-    const orderBy: Prisma.TransactionOrderByWithRelationInput = {
-      [query.order.field]: query.order.direction,
-    }
-
-    const [count, data] = await Promise.all([
-      this.prisma.transaction.count({ where }),
-      this.prisma.transaction.findMany({
-        where,
-        orderBy,
-        take: query.limit,
-        skip: query.page * query.limit,
-      }),
-    ])
-
+  /**
+   * Build the create data for the create query
+   *
+   * @param data - Create data
+   * @returns {object} - The create data
+   */
+  protected buildCreateData(data: CreateTransactionDto) {
     return {
-      data,
-      count,
-      limit: query.limit,
-      page: query.page,
-      total_pages: Math.ceil(count / query.limit),
-    }
-  }
-
-  /**
-   * Create a transaction
-   *
-   * @param data - Transaction data
-   * @param user - User
-   * @returns
-   */
-  async create(data: CreateTransactionDto, user: User): Promise<Transaction> {
-    const transaction = await this.prisma.transaction.create({
-      data: {
-        ...data,
-        user_id: user.id,
-        categories: {
-          create: data.categories?.map((id) => ({
-            category_id: id,
-          })),
-        },
+      ...data,
+      categories: {
+        create: data.categories?.map((id) => ({
+          category_id: id,
+        })),
       },
-    })
-
-    return transaction
-  }
-
-  /**
-   * Update a transaction
-   *
-   * @param id - Transaction ID
-   * @param data - Transaction data
-   * @param user - User
-   * @returns Transaction
-   * @throws NotFoundException
-   */
-  async get(id: string, user: User): Promise<Transaction> {
-    const transaction = await this.prisma.transaction.findUnique({ where: { id, user_id: user.id } })
-
-    if (!transaction) {
-      throw new NotFoundException()
     }
-
-    return transaction
   }
 
   /**
-   * Update a transaction
+   * Build the update data for the update query
    *
-   * @param id - Transaction ID
-   * @param data - Transaction data
-   * @param user - User
-   * @returns Transaction
-   * @throws NotFoundException
+   * @param data - Update data
+   * @returns {object} - The update data
    */
-  async update(id: string, data: UpdateTransactionDto, user: User): Promise<Transaction> {
-    const transaction = await this.prisma.transaction.update({
-      where: { id, user_id: user.id },
-      data: {
-        ...data,
-        categories: {
-          deleteMany: {},
-          create: data.categories?.map((id) => ({
-            category_id: id,
-          })),
-        },
+  protected buildUpdateData(data: UpdateTransactionDto) {
+    return {
+      ...data,
+      categories: {
+        deleteMany: {},
+        create: data.categories?.map((id) => ({
+          category_id: id,
+        })),
       },
-    })
-
-    if (!transaction) {
-      throw new NotFoundException()
     }
-
-    return transaction
-  }
-
-  /**
-   * Delete a transaction
-   *
-   * @param id - Transaction ID
-   * @param user - User
-   * @returns Transaction
-   */
-  async delete(id: string, user: User): Promise<void> {
-    await this.prisma.transaction.delete({
-      where: { id, user_id: user.id },
-    })
   }
 }
