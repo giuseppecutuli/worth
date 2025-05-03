@@ -2,6 +2,11 @@ import { PaginatedDto } from '@/common/dtos'
 import { applyDecorators, Type } from '@nestjs/common'
 import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger'
 
+/**
+ * Decorator to document a paginated response in Swagger.
+ * @param model - The model class to be used in the response.
+ * @returns A decorator that applies Swagger documentation for a paginated response.
+ */
 export const ApiPaginatedResponse = <TModel extends Type<any>>(model: TModel) => {
   return applyDecorators(
     ApiExtraModels(PaginatedDto, model),

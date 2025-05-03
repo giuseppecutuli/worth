@@ -2,6 +2,12 @@ import { OrderDto } from '@/common/dtos'
 import { SortDirection } from '@/common/types'
 import { registerDecorator, ValidationArguments, ValidationOptions } from 'class-validator'
 
+/**
+ * Decorator to validate the order of a field.
+ * @param allowedFields - Array of allowed fields for ordering.
+ * @param validationOptions - Optional validation options.
+ * @returns A decorator that validates the order of a field.
+ */
 export function IsValidOrder(allowedFields: string[], validationOptions?: ValidationOptions): PropertyDecorator {
   return function (object: object, propertyName: string | symbol) {
     registerDecorator({
