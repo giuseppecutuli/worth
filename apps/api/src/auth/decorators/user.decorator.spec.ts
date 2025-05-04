@@ -4,10 +4,12 @@ import { ROUTE_ARGS_METADATA } from '@nestjs/common/constants'
 
 function getParamDecoratorFactory(Decorator: any) {
   class TestDecorator {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public test(@Decorator() value) {}
   }
 
   const args = Reflect.getMetadata(ROUTE_ARGS_METADATA, TestDecorator, 'test')
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
   return args[Object.keys(args)[0] as string].factory
 }
 

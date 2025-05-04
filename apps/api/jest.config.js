@@ -6,6 +6,7 @@ const config = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
+  modulePathIgnorePatterns: ["<rootDir>/dist/"],
   coveragePathIgnorePatterns: [
       "main.ts",
       "index.ts",
