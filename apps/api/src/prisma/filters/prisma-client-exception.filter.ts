@@ -1,5 +1,5 @@
 import { ArgumentsHost, Catch, HttpException, type HttpServer, HttpStatus } from '@nestjs/common'
-import { APP_FILTER, BaseExceptionFilter, HttpAdapterHost } from '@nestjs/core'
+import { BaseExceptionFilter } from '@nestjs/core'
 import { Prisma } from '@prisma/client'
 
 export declare type GqlContextType = 'graphql'
@@ -14,6 +14,10 @@ export type ErrorCodesStatusMapping = {
 }
 
 /**
+ * PrismaClientExceptionFilter is a filter that catches Prisma Client exceptions.
+ * It extends the BaseExceptionFilter and overrides the catch method to handle
+ * PrismaClientKnownRequestError exceptions.
+ * It maps the error codes to HTTP status codes and exception messages.
  * {@link PrismaClientExceptionFilter} catches {@link Prisma.PrismaClientKnownRequestError} exceptions.
  */
 @Catch(Prisma?.PrismaClientKnownRequestError)
@@ -39,27 +43,12 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
   constructor(applicationRef?: HttpServer, errorCodesStatusMapping?: ErrorCodesStatusMapping) {
     super(applicationRef)
 
-    // use custom error codes mapping (overwrite)
-    //
-    // @example:
-    //
-    //   const { httpAdapter } = app.get(HttpAdapterHost);
-    //   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter, {
-    //     P2022: HttpStatus.BAD_REQUEST,
-    //   }));
-    //
-    //   or
-    //
-    //   const { httpAdapter } = app.get(HttpAdapterHost);
-    //   app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter, {
-    //     // You can omit either statusCode or errorMessage so that the default one is used.
-    //     P2022: { statusCode: HttpStatus.BAD_REQUEST, errorMessage: "bad request" },
-    //   }));
-    //
     this.userDefinedMapping = errorCodesStatusMapping
   }
 
   /**
+   * Catch PrismaClientKnownRequestError exceptions
+   *
    * @param exception
    * @param host
    * @returns
@@ -79,13 +68,6 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
       }
 
       return super.catch(new HttpException({ statusCode, message }, statusCode), host)
-    } else if (host.getType<GqlContextType>() === 'graphql') {
-      // for graphql requests
-      if (statusCode === undefined) {
-        return exception
-      }
-
-      return new HttpException({ statusCode, message }, statusCode)
     }
   }
 
@@ -106,15 +88,5 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
   private defaultExceptionMessage(exception: Prisma.PrismaClientKnownRequestError): string {
     const shortMessage = exception.message.substring(exception.message.indexOf('→'))
     return `[${exception.code}]: ` + shortMessage.substring(shortMessage.indexOf('\n')).replace(/\n/g, '').trim()
-  }
-}
-
-export function providePrismaClientExceptionFilter(errorCodesStatusMapping?: ErrorCodesStatusMapping) {
-  return {
-    provide: APP_FILTER,
-    useFactory: ({ httpAdapter }: HttpAdapterHost) => {
-      return new PrismaClientExceptionFilter(httpAdapter, errorCodesStatusMapping)
-    },
-    inject: [HttpAdapterHost],
   }
 }
