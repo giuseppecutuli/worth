@@ -1,4 +1,4 @@
-import { reactRouter } from '@/components/Router'
+import { reactRouter } from '@/contexts/Router'
 
 declare module '@tanstack/react-router' {
   interface Register {
