@@ -2,38 +2,31 @@ import '@mantine/core/styles.css'
 import '@mantine/charts/styles.css'
 import '@mantine/dates/styles.css'
 import '@mantine/notifications/styles.css'
+// Initialize i18n before instantiate the react app
+import './lib/i18n'
 
 import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
-import { createRouter, RouterProvider } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 
-import { AuthProvider, useAuth } from './contexts/Auth'
-import { routeTree } from './routeTree.gen'
+import { Router } from './components/Router'
+import { AuthProvider } from './contexts/Auth'
+import { I18nProvider } from './contexts/I18n'
+import { combineComponents } from './lib/utils'
 
-const router = createRouter({
-  routeTree,
-  context: {
-    auth: undefined!,
-  },
-})
+/**
+ * List of provider that need to initialize on start up of the app.
+ * This provider will be combined in a single components with the utils
+ * combineComponents.
+ *
+ * !! IMPORTANT
+ * The order is crucial, the provider will be initialize in the order
+ * of the array, consider this when you insert it another one.
+ */
+const providers = [MantineProvider, ModalsProvider, I18nProvider, AuthProvider]
 
-declare module '@tanstack/react-router' {
-  interface Register {
-    router: typeof router
-  }
-}
-
-const Router = () => {
-  const auth = useAuth()
-
-  const context = {
-    auth,
-  }
-
-  return <RouterProvider router={router} context={context} />
-}
+const MainProvider = combineComponents(providers)
 
 // Render the app
 const rootElement = document.getElementById('root')!
@@ -41,13 +34,9 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <MantineProvider>
-        <ModalsProvider>
-          <AuthProvider>
-            <Router />
-          </AuthProvider>
-        </ModalsProvider>
-      </MantineProvider>
+      <MainProvider>
+        <Router />
+      </MainProvider>
     </StrictMode>,
   )
 }

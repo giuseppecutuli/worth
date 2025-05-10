@@ -1,8 +1,13 @@
 import { Anchor, Button, Checkbox, Paper, PasswordInput, Text, TextInput, Title } from '@mantine/core'
+import { useTranslation } from 'react-i18next'
 
 import classes from './Login.module.scss'
 
 export const LoginPage = () => {
+  const { t } = useTranslation()
+
+  console.log(t('form.email'))
+
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.form}>
