@@ -7,8 +7,8 @@ import { type FC, type ReactNode } from 'react'
  * @param components - Components to combine
  * @returns - Single component with rendered components combined
  */
-export const combineComponents = (components: FC<{ children: ReactNode }>[]): FC<{ children: ReactNode }> => {
-  const CombinedComponent: FC<{ children: ReactNode }> = ({ children }) => {
+export const combineComponents = (components: FC<{ children: ReactNode }>[]): FC<{ children?: ReactNode }> => {
+  const CombinedComponent: FC<{ children?: ReactNode }> = ({ children }) => {
     return components.reduceRight((acc, Comp) => {
       return <Comp>{acc}</Comp>
     }, children)

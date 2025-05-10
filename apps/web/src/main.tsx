@@ -10,9 +10,9 @@ import { ModalsProvider } from '@mantine/modals'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 
-import { Router } from './components/Router'
 import { AuthProvider } from './contexts/Auth'
 import { I18nProvider } from './contexts/I18n'
+import { RouterProvider } from './contexts/Router'
 import { combineComponents } from './lib/utils'
 
 /**
@@ -24,9 +24,9 @@ import { combineComponents } from './lib/utils'
  * The order is crucial, the provider will be initialize in the order
  * of the array, consider this when you insert it another one.
  */
-const providers = [MantineProvider, ModalsProvider, I18nProvider, AuthProvider]
+const providers = [MantineProvider, ModalsProvider, I18nProvider, AuthProvider, RouterProvider]
 
-const MainProvider = combineComponents(providers)
+const MainApp = combineComponents(providers)
 
 // Render the app
 const rootElement = document.getElementById('root')!
@@ -34,9 +34,7 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <MainProvider>
-        <Router />
-      </MainProvider>
+      <MainApp />
     </StrictMode>,
   )
 }
