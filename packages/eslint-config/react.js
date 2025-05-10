@@ -1,6 +1,7 @@
 import pluginReactHooks from 'eslint-plugin-react-hooks'
 import pluginReact from 'eslint-plugin-react'
 import globals from 'globals'
+import mantine from 'eslint-config-mantine';
 import pluginReactRefresh from 'eslint-plugin-react-refresh'
 import { config as baseConfig } from './base.js'
 
@@ -11,6 +12,7 @@ import { config as baseConfig } from './base.js'
  * */
 export const config = [
   ...baseConfig,
+  ...mantine,
   {
     ...pluginReact.configs.flat.recommended,
     languageOptions: {

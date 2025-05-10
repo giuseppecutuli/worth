@@ -1,12 +1,17 @@
+import '@mantine/core/styles.css'
+import '@mantine/charts/styles.css'
+import '@mantine/dates/styles.css'
+import '@mantine/notifications/styles.css'
+
+import { MantineProvider } from '@mantine/core'
+import { ModalsProvider } from '@mantine/modals'
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 
 import { AuthProvider, useAuth } from './contexts/Auth'
-// Import the generated route tree
 import { routeTree } from './routeTree.gen'
 
-// Create a new router instance
 const router = createRouter({
   routeTree,
   context: {
@@ -14,7 +19,6 @@ const router = createRouter({
   },
 })
 
-// Register the router instance for type safety
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router
@@ -37,9 +41,13 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <AuthProvider>
-        <Router />
-      </AuthProvider>
+      <MantineProvider>
+        <ModalsProvider>
+          <AuthProvider>
+            <Router />
+          </AuthProvider>
+        </ModalsProvider>
+      </MantineProvider>
     </StrictMode>,
   )
 }

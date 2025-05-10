@@ -11,11 +11,19 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.0.1",
+    "@mantine/charts": "^8.0.0",
+    "@mantine/core": "^8.0.0",
+    "@mantine/dates": "^8.0.0",
+    "@mantine/form": "^8.0.0",
+    "@mantine/hooks": "^8.0.0",
+    "@mantine/modals": "^8.0.0",
+    "@mantine/notifications": "^8.0.0",
     "@tanstack/react-router": "^1.120.3",
+    "dayjs": "^1.11.13",
+    "mantine-form-zod-resolver": "^1.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-hook-form": "^7.56.3",
+    "recharts": "2",
     "zod": "^3.24.4"
   },
   "devDependencies": {
@@ -28,6 +36,10 @@
     "@worth/eslint-config": "workspace:*",
     "@worth/prettier-config": "workspace:*",
     "@worth/typescript-config": "workspace:*",
+    "postcss": "^8.5.3",
+    "postcss-preset-mantine": "^1.17.0",
+    "postcss-simple-vars": "^7.0.1",
+    "sass-embedded": "^1.87.0",
     "typescript": "5.8.3",
     "vite": "^6.3.5",
     "vite-tsconfig-paths": "^5.1.4",
