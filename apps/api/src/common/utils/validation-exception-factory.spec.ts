@@ -1,6 +1,7 @@
 import { UnprocessableEntityException } from '@nestjs/common'
-import { validationExceptionFactory } from './validation-exception-factory'
 import { ValidationError } from 'class-validator'
+
+import { validationExceptionFactory } from './validation-exception-factory'
 
 describe('validationExceptionFactory', () => {
   it('should format validation errors correctly', () => {

@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { AccountType } from '@prisma/client'
-import { ExistOnDb } from '@/prisma/decorators/exist-on-db.decorator'
 import { IsEnum, IsOptional, IsString, IsUUID } from 'class-validator'
+
+import { ExistOnDb } from '@/prisma/decorators/exist-on-db.decorator'
 
 export class UpdateAccountDto {
   @ApiProperty({ required: true })

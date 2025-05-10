@@ -1,5 +1,6 @@
-import { JwtAuthGuard } from './jwt.guard'
 import { AuthGuard } from '@nestjs/passport'
+
+import { JwtAuthGuard } from './jwt.guard'
 
 describe('JwtAuthGuard', () => {
   let guard: JwtAuthGuard

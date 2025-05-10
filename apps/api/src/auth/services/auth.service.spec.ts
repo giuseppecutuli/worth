@@ -1,13 +1,15 @@
-import { Test, TestingModule } from '@nestjs/testing'
 import { ConflictException, NotFoundException } from '@nestjs/common'
-import { JwtService } from '@nestjs/jwt'
-import { AuthService } from './auth.service'
 import { ConfigService } from '@nestjs/config'
-import { PasswordService } from './password.service'
-import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignOutDto, SignUpDto } from '@/auth/dtos/requests'
+import { JwtService } from '@nestjs/jwt'
+import { Test, TestingModule } from '@nestjs/testing'
 import { RefreshToken, User } from '@prisma/client'
-import { PrismaService } from '@/prisma/prisma.service'
+
 import { AuthMessages } from '@/auth/auth.constants'
+import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignOutDto, SignUpDto } from '@/auth/dtos/requests'
+import { PrismaService } from '@/prisma/prisma.service'
+
+import { AuthService } from './auth.service'
+import { PasswordService } from './password.service'
 
 jest.mock('jwt-decode', () => ({
   jwtDecode: jest.fn().mockReturnValue({

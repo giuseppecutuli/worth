@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from '@/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
-import { CreateAssetDto, UpdateAssetDto, AssetListDto } from './dtos/requests'
-import { Asset } from './entities'
+
 import { CrudService } from '@/common/services/crud.service'
+import { PrismaService } from '@/prisma/prisma.service'
+
+import { AssetListDto, CreateAssetDto, UpdateAssetDto } from './dtos/requests'
+import { Asset } from './entities'
 
 @Injectable()
 export class AssetsService extends CrudService<Asset, CreateAssetDto, UpdateAssetDto, AssetListDto> {

@@ -1,7 +1,8 @@
-import { BaseEntityDto } from '@/common/dtos'
 import { ApiProperty } from '@nestjs/swagger'
-import { User as PrismaUser, Role } from '@prisma/client'
+import { Role, User as PrismaUser } from '@prisma/client'
 import { Exclude } from 'class-transformer'
+
+import { BaseEntityDto } from '@/common/dtos'
 
 export class User extends BaseEntityDto implements PrismaUser {
   @ApiProperty()

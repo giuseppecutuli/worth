@@ -1,5 +1,4 @@
 import { Injectable, Logger } from '@nestjs/common'
-import { PrismaService } from '@/prisma/prisma.service'
 import {
   registerDecorator,
   ValidationArguments,
@@ -7,6 +6,8 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator'
+
+import { PrismaService } from '@/prisma/prisma.service'
 
 type Options = {
   entity: string

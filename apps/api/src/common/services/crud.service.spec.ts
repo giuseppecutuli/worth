@@ -1,10 +1,12 @@
-import { Test, TestingModule } from '@nestjs/testing'
-import { CrudService } from './crud.service'
-import { PrismaService } from '@/prisma/prisma.service'
-import { BaseEntityDto, PaginateDto } from '../dtos'
-import { User } from '@/users/entities'
 import { Injectable, NotFoundException } from '@nestjs/common'
+import { Test, TestingModule } from '@nestjs/testing'
 import { Prisma } from '@prisma/client'
+
+import { PrismaService } from '@/prisma/prisma.service'
+import { User } from '@/users/entities'
+
+import { BaseEntityDto, PaginateDto } from '../dtos'
+import { CrudService } from './crud.service'
 
 // Mock DTOs
 class TestListDto extends PaginateDto {}

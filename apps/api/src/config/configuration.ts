@@ -1,4 +1,5 @@
 import { getOsEnv, getOsEnvNumber } from '@/common/utils'
+
 import { Config } from './config.interface'
 
 export default (): Config => ({

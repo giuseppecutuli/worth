@@ -1,7 +1,8 @@
-import { OrderQuery } from './order-query.decorator'
 import { plainToInstance } from 'class-transformer'
 import { validate } from 'class-validator'
+
 import { OrderDto } from '../dtos'
+import { OrderQuery } from './order-query.decorator'
 
 describe('OrderQuery Decorator', () => {
   class TestDto {

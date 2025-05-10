@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from '@/prisma/prisma.service'
 import { Prisma } from '@prisma/client'
-import { CreateAccountCategoryDto, AccountCategoryListDto, UpdateAccountCategoryDto } from './dtos/requests'
-import { AccountCategory } from './entities'
+
 import { CrudService } from '@/common/services/crud.service'
+import { PrismaService } from '@/prisma/prisma.service'
+
+import { AccountCategoryListDto, CreateAccountCategoryDto, UpdateAccountCategoryDto } from './dtos/requests'
+import { AccountCategory } from './entities'
 
 /**
  * Service for account categories

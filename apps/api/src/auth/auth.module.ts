@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common'
-import { JwtModule } from '@nestjs/jwt'
 import { ConfigService } from '@nestjs/config'
+import { JwtModule } from '@nestjs/jwt'
+
 import { Config } from '@/config/config.interface'
+
 import { AuthController } from './auth.controller'
-import { JwtStrategy } from './strategies/jwt.strategy'
 import { AuthService } from './services/auth.service'
+import { JwtStrategy } from './strategies/jwt.strategy'
 
 @Module({
   imports: [

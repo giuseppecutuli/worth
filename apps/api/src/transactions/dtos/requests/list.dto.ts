@@ -1,9 +1,10 @@
-import { PaginateDto } from '@/common/dtos'
 import { ApiProperty } from '@nestjs/swagger'
 import { Currency, TransactionType } from '@prisma/client'
-import { ExistOnDb } from '@/prisma/decorators/exist-on-db.decorator'
 import { Type } from 'class-transformer'
 import { IsArray, IsDate, IsEnum, IsNumber, IsOptional, IsUUID } from 'class-validator'
+
+import { PaginateDto } from '@/common/dtos'
+import { ExistOnDb } from '@/prisma/decorators/exist-on-db.decorator'
 
 export class TransactionListDto extends PaginateDto {
   @ApiProperty({ required: false })

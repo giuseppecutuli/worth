@@ -1,13 +1,15 @@
-import { HttpAdapterHost, NestFactory } from '@nestjs/core'
-import { ConfigService } from '@nestjs/config'
 import { Logger, ValidationPipe } from '@nestjs/common'
-import { useContainer } from 'class-validator'
+import { ConfigService } from '@nestjs/config'
+import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import { Config } from '@/config/config.interface'
-import { AppModule } from './app.module'
-import { validationExceptionFactory } from '@/common/utils'
-import { PrismaClientExceptionFilter } from '@/prisma/filters/prisma-client-exception.filter'
+import { useContainer } from 'class-validator'
 import { Logger as PinoLogger } from 'nestjs-pino'
+
+import { validationExceptionFactory } from '@/common/utils'
+import { Config } from '@/config/config.interface'
+import { PrismaClientExceptionFilter } from '@/prisma/filters/prisma-client-exception.filter'
+
+import { AppModule } from './app.module'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true })

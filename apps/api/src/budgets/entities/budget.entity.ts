@@ -1,6 +1,7 @@
-import { BaseEntityDto } from '@/common/dtos'
 import { ApiProperty } from '@nestjs/swagger'
 import { Budget as PrismaBudget, Prisma } from '@prisma/client'
+
+import { BaseEntityDto } from '@/common/dtos'
 
 export class Budget extends BaseEntityDto implements PrismaBudget {
   @ApiProperty()

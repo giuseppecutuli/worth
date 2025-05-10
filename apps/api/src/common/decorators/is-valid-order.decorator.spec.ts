@@ -1,4 +1,5 @@
 import { validate } from 'class-validator'
+
 import { IsValidOrder } from './is-valid-order.decorator'
 
 describe('IsValidOrder', () => {

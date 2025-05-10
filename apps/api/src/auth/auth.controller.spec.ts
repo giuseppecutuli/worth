@@ -1,8 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { AuthController } from './auth.controller'
-import { AuthService } from './services/auth.service'
-import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignOutDto, SignUpDto } from './dtos/requests'
+
 import { User } from '@/users/entities'
+
+import { AuthController } from './auth.controller'
+import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignOutDto, SignUpDto } from './dtos/requests'
+import { AuthService } from './services/auth.service'
 
 describe('AuthController', () => {
   let controller: AuthController

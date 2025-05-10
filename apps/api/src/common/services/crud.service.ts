@@ -1,9 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
-import { lcFirst } from '../utils'
-import { PaginatedDto, PaginateDto } from '../dtos'
-import { User } from '@/users/entities'
+
 import { PrismaService } from '@/prisma/prisma.service'
+import { User } from '@/users/entities'
+
+import { PaginatedDto, PaginateDto } from '../dtos'
+import { lcFirst } from '../utils'
 
 /**
  * Base service for CRUD operations

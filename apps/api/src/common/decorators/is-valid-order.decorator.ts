@@ -1,6 +1,7 @@
+import { registerDecorator, ValidationArguments, ValidationOptions } from 'class-validator'
+
 import { OrderDto } from '@/common/dtos'
 import { SortDirection } from '@/common/types'
-import { registerDecorator, ValidationArguments, ValidationOptions } from 'class-validator'
 
 /**
  * Decorator to validate the order of a field.

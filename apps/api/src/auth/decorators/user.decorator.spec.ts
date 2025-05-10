@@ -1,6 +1,8 @@
-import { UseUser } from './user.decorator'
-import { User } from '@/users/entities'
 import { ROUTE_ARGS_METADATA } from '@nestjs/common/constants'
+
+import { User } from '@/users/entities'
+
+import { UseUser } from './user.decorator'
 
 function getParamDecoratorFactory(Decorator: any) {
   class TestDecorator {

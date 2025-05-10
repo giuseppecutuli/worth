@@ -1,7 +1,8 @@
-import { PaginateDto } from '@/common/dtos'
 import { ApiProperty } from '@nestjs/swagger'
 import { AssetType } from '@prisma/client'
 import { IsEnum, IsOptional, IsString } from 'class-validator'
+
+import { PaginateDto } from '@/common/dtos'
 
 export class AssetListDto extends PaginateDto {
   @ApiProperty({ required: false, description: 'Filter by name (is possible to partial match)' })

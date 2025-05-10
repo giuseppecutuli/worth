@@ -1,4 +1,4 @@
-import { randomString, lcFirst } from './string'
+import { lcFirst, randomString } from './string'
 
 describe('String Utils', () => {
   describe('randomString', () => {

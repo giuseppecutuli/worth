@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { ExistOnDb } from '@/prisma/decorators/exist-on-db.decorator'
 import { Type } from 'class-transformer'
 import { ArrayMinSize, IsArray, IsDate, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator'
+
+import { ExistOnDb } from '@/prisma/decorators/exist-on-db.decorator'
 
 export class CreateBudgetDto {
   @ApiProperty()

@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from '@/prisma/prisma.service'
-import { CreateAccountDto } from './dtos/requests/create.dto'
-import { AccountListDto, UpdateAccountDto } from './dtos/requests'
 import { Prisma } from '@prisma/client'
-import { Account } from './entities'
+
 import { CrudService } from '@/common/services/crud.service'
+import { PrismaService } from '@/prisma/prisma.service'
+
+import { AccountListDto, UpdateAccountDto } from './dtos/requests'
+import { CreateAccountDto } from './dtos/requests/create.dto'
+import { Account } from './entities'
 
 /**
  * Service for accounts

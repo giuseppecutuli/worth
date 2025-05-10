@@ -1,11 +1,13 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
-import { AssetListDto, CreateAssetDto, UpdateAssetDto } from './dtos/requests'
-import { AssetsService } from './assets.service'
-import { UseAuth, UseUser } from '@/auth/decorators'
-import { User } from '@/users/entities'
-import { ApiPaginatedResponse } from '@/common/utils/swagger'
-import { Asset } from './entities'
 import { ApiOkResponse } from '@nestjs/swagger'
+
+import { UseAuth, UseUser } from '@/auth/decorators'
+import { ApiPaginatedResponse } from '@/common/utils/swagger'
+import { User } from '@/users/entities'
+
+import { AssetsService } from './assets.service'
+import { AssetListDto, CreateAssetDto, UpdateAssetDto } from './dtos/requests'
+import { Asset } from './entities'
 
 @Controller('assets')
 export class AssetsController {

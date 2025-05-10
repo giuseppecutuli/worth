@@ -1,8 +1,9 @@
-import { Transform } from 'class-transformer'
-import { IsValidOrder } from './is-valid-order.decorator'
-import { IsOptional, ValidationOptions } from 'class-validator'
 import { applyDecorators } from '@nestjs/common'
 import { ApiProperty } from '@nestjs/swagger'
+import { Transform } from 'class-transformer'
+import { IsOptional, ValidationOptions } from 'class-validator'
+
+import { IsValidOrder } from './is-valid-order.decorator'
 
 /**
  * Decorator to validate and transform order query parameters.

@@ -1,13 +1,15 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
-import { CreateAccountDto } from './dtos/requests/create.dto'
-import { User } from '@/users/entities'
+
 import { UseAuth, UseUser } from '@/auth/decorators'
-import { AccountsService } from './accounts.service'
-import { Account } from './entities'
-import { ApiPaginatedResponse } from '@/common/utils/swagger'
-import { AccountListDto, UpdateAccountDto } from './dtos/requests'
 import { PaginatedDto } from '@/common/dtos'
+import { ApiPaginatedResponse } from '@/common/utils/swagger'
+import { User } from '@/users/entities'
+
+import { AccountsService } from './accounts.service'
+import { AccountListDto, UpdateAccountDto } from './dtos/requests'
+import { CreateAccountDto } from './dtos/requests/create.dto'
+import { Account } from './entities'
 
 @ApiTags('Accounts')
 @Controller('accounts')

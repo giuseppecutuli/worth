@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from '@/prisma/prisma.service'
-import { BudgetListDto, CreateBudgetDto, UpdateBudgetDto } from './dtos/requests'
 import { Prisma } from '@prisma/client'
-import { Budget } from './entities'
+
 import { CrudService } from '@/common/services/crud.service'
+import { PrismaService } from '@/prisma/prisma.service'
+
+import { BudgetListDto, CreateBudgetDto, UpdateBudgetDto } from './dtos/requests'
+import { Budget } from './entities'
 
 /**
  * Service for budgets

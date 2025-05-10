@@ -1,6 +1,7 @@
-import { InvestmentTransactionType, Prisma, InvestmentTransaction as PrismaInvestmentTransaction } from '@prisma/client'
-import { BaseEntityDto } from '@/common/dtos'
 import { ApiProperty } from '@nestjs/swagger'
+import { InvestmentTransaction as PrismaInvestmentTransaction, InvestmentTransactionType, Prisma } from '@prisma/client'
+
+import { BaseEntityDto } from '@/common/dtos'
 
 export class InvestmentTransaction extends BaseEntityDto implements PrismaInvestmentTransaction {
   @ApiProperty({ enum: InvestmentTransactionType })

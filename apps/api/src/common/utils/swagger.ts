@@ -1,6 +1,7 @@
-import { PaginatedDto } from '@/common/dtos'
 import { applyDecorators, Type } from '@nestjs/common'
 import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger'
+
+import { PaginatedDto } from '@/common/dtos'
 
 /**
  * Decorator to document a paginated response in Swagger.

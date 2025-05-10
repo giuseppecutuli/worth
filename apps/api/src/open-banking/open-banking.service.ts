@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common'
 import { faker } from '@faker-js/faker'
+import { Injectable } from '@nestjs/common'
+
 import { IAccount, ITransaction } from './interfaces'
 
 /**

@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsDate, IsEnum, IsNumber, IsOptional, IsUUID, Min } from 'class-validator'
-import { ExistOnDb } from '@/prisma/decorators/exist-on-db.decorator'
 import { InvestmentTransactionType } from '@prisma/client'
 import { Type } from 'class-transformer'
+import { IsDate, IsEnum, IsNumber, IsOptional, IsUUID, Min } from 'class-validator'
+
+import { ExistOnDb } from '@/prisma/decorators/exist-on-db.decorator'
 
 export class UpdateInvestmentTransactionDto {
   @ApiProperty({ enum: InvestmentTransactionType, required: false })
