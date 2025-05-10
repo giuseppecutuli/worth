@@ -1,4 +1,4 @@
-import { config } from '@worth/eslint-config/next-js'
+import { config } from '@worth/eslint-config/react'
 
 /** @type {import("eslint").Linter.Config} */
 export default config
