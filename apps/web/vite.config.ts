@@ -12,7 +12,7 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         api: 'modern-compiler',
-        additionalData: `@use "${path.join(process.cwd(), 'src/_mantine').replace(/\\/g, '/')}" as mantine;`,
+        additionalData: `@use "${path.join(process.cwd(), 'src/assets/styles/_mantine').replace(/\\/g, '/')}" as mantine;`,
       },
     },
   },

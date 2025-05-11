@@ -1,5 +1,12 @@
 import { type FC, type ReactNode } from 'react'
 
+type Item =
+  | {
+      component: FC<{ children: ReactNode }>
+      props?: any
+    }
+  | FC<{ children: ReactNode }>
+
 /**
  * This method permit to combine different components into one.
  * For example is useful for combine providers.
@@ -7,10 +14,13 @@ import { type FC, type ReactNode } from 'react'
  * @param components - Components to combine
  * @returns - Single component with rendered components combined
  */
-export const combineComponents = (components: FC<{ children: ReactNode }>[]): FC<{ children?: ReactNode }> => {
+export const combineComponents = (components: Item[]): FC<{ children?: ReactNode }> => {
   const CombinedComponent: FC<{ children?: ReactNode }> = ({ children }) => {
-    return components.reduceRight((acc, Comp) => {
-      return <Comp>{acc}</Comp>
+    return components.reduceRight((acc, el) => {
+      const Comp = typeof el === 'function' ? el : el.component
+      const props = typeof el === 'function' ? undefined : el.props
+
+      return <Comp {...props}>{acc}</Comp>
     }, children)
   }
 

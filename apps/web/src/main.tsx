@@ -2,6 +2,7 @@ import '@mantine/core/styles.css'
 import '@mantine/charts/styles.css'
 import '@mantine/dates/styles.css'
 import '@mantine/notifications/styles.css'
+import '@fontsource-variable/inter'
 // Initialize i18n before instantiate the react app
 import './lib/i18n'
 
@@ -13,6 +14,7 @@ import ReactDOM from 'react-dom/client'
 import { AuthProvider } from './contexts/Auth'
 import { I18nProvider } from './contexts/I18n'
 import { RouterProvider } from './contexts/Router'
+import { theme } from './lib/theme'
 import { combineComponents } from './lib/utils'
 
 /**
@@ -24,7 +26,16 @@ import { combineComponents } from './lib/utils'
  * The order is crucial, the provider will be initialize in the order
  * of the array, consider this when you insert it another one.
  */
-const providers = [MantineProvider, ModalsProvider, I18nProvider, AuthProvider, RouterProvider]
+const providers = [
+  {
+    component: MantineProvider,
+    props: { theme },
+  },
+  ModalsProvider,
+  I18nProvider,
+  AuthProvider,
+  RouterProvider,
+]
 
 const MainApp = combineComponents(providers)
 
