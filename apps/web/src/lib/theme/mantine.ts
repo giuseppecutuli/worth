@@ -1,4 +1,3 @@
-/* eslint-disable quotes */
 import { createTheme } from '@mantine/core'
 
 export const theme = createTheme({
@@ -26,9 +25,9 @@ export const theme = createTheme({
       },
     },
   },
-  primaryColor: 'teal-green',
+  primaryColor: 'teal',
   colors: {
-    'teal-green': ['#e8fcfa', '#d9f5f2', '#b4eae4', '#8bded5', '#6bd4c9', '#56cec1', '#49cbbd', '#38b3a6', '#299d91', '#088b7f'],
+    teal: ['#e8fcfa', '#d9f5f2', '#b4eae4', '#8bded5', '#6bd4c9', '#56cec1', '#49cbbd', '#38b3a6', '#299d91', '#088b7f'],
   },
   lineHeights: {
     xs: '1.33',

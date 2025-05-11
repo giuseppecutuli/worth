@@ -32,6 +32,7 @@ export const config = [
     settings: { react: { version: 'detect' } },
     rules: {
       ...pluginReactHooks.configs.recommended.rules,
+      "react/prop-types": "off",
       'react/react-in-jsx-scope': 'off',
       'react-refresh/only-export-components': [
         'warn',
