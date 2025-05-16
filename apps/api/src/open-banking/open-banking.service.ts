@@ -60,7 +60,7 @@ export class OpenBankingService {
    * @param to - The end date of the transactions
    * @returns - The transactions
    */
-  public retrieveTransactions(accountId: string, from: Date, to: Date): ITransaction[] {
+  public retrieveTransactions(_accountId: string, from: Date, to: Date): ITransaction[] {
     const count = faker.number.int({ min: 1, max: 50 })
 
     return Array.from({ length: count }).map(() => {

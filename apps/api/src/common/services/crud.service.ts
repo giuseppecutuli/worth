@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { Prisma } from '@prisma/client'
 
@@ -58,7 +59,7 @@ export abstract class CrudService<Entity, CreateDto, UpdateDto, ListDto extends 
    * @param user - User
    * @returns {object} - The update data
    */
-  protected buildUpdateData(data: UpdateDto, user: User): Prisma.Args<any, 'create'>['data'] {
+  protected buildUpdateData(data: UpdateDto, _: User): Prisma.Args<any, 'create'>['data'] {
     return data
   }
 
