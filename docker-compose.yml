@@ -11,11 +11,6 @@ services:
     restart: always
     depends_on:
       - db
-    environment:
-      - PORT=3346
-      - DATABASE_URL=postgresql://user:password@db:5432/db
-      - JWT_SECRET=supersecret
-      - JWT_REFRESH_SECRET=supersecret
     ports:
       - "3346:3346"
     networks:
@@ -28,7 +23,7 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: db
+      POSTGRES_DB: worth
     ports:
       - "5433:5432"
     networks:
