@@ -27,6 +27,9 @@ RUN npm install -g pnpm@10.2.1
 RUN pnpm install
 RUN pnpm run build:backend
 
+# Run migration
+RUN pnpm run db:deploy
+
 # ==========================================
 # PRODUCTION STAGE
 # ==========================================
@@ -61,5 +64,4 @@ COPY --from=builder /workspace/apps/api/node_modules ./apps/api/node_modules
 WORKDIR /app/apps/api
 
 # Start the application
-CMD ["sh", "-c", "pnpm run db:deploy"]
 CMD ["node", "dist/main"]
