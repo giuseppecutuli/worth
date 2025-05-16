@@ -1,1 +1,1 @@
-export * from './combineComponents'
+export * from './combine-components'

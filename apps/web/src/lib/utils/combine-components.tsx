@@ -2,10 +2,10 @@ import { type FC, type ReactNode } from 'react'
 
 type Item =
   | {
-      component: FC<{ children: ReactNode }>
+      component: FC<any>
       props?: any
     }
-  | FC<{ children: ReactNode }>
+  | FC<any>
 
 /**
  * This method permit to combine different components into one.

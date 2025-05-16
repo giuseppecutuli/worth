@@ -8,12 +8,14 @@ import './lib/i18n'
 
 import { MantineProvider } from '@mantine/core'
 import { ModalsProvider } from '@mantine/modals'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
 
 import { AuthProvider } from './contexts/Auth'
 import { I18nProvider } from './contexts/I18n'
 import { RouterProvider } from './contexts/Router'
+import { queryClient } from './lib/api'
 import { theme } from './lib/theme'
 import { combineComponents } from './lib/utils'
 
@@ -33,6 +35,10 @@ const providers = [
   },
   ModalsProvider,
   I18nProvider,
+  {
+    component: QueryClientProvider,
+    props: { client: queryClient },
+  },
   AuthProvider,
   RouterProvider,
 ]

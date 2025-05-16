@@ -10,6 +10,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.26.0",
+    "@tanstack/eslint-plugin-query": "^5.74.7",
     "eslint": "^9.26.0",
     "eslint-config-mantine": "^4.0.3",
     "eslint-config-prettier": "^10.1.2",
