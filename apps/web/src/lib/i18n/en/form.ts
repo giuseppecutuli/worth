@@ -4,6 +4,11 @@ export const form = {
     notHaveAccount: "Don't have an account yet?",
     createAccount: 'Create account',
   },
+  register: {
+    submit: 'Register',
+    alreadyHaveAccount: 'Already have an account?',
+    login: 'Login',
+  },
   email: 'Email',
   password: 'Password',
   enterEmail: 'Enter your email',
@@ -12,4 +17,8 @@ export const form = {
   forgotPassword: 'Forgot your password?',
   invalidEmail: 'Invalid email',
   passwordInvalid: 'Password must be at least 8 characters long',
+  firstName: 'First name',
+  lastName: 'Last name',
+  enterFirstName: 'Enter your first name',
+  enterLastName: 'Enter your last name',
 }

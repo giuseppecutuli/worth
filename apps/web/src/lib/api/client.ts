@@ -1,8 +1,8 @@
 import { QueryClient } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 
-import { ACCESS_TOKEN_KEY, EXPIRATION_DATE_KEY, LOGOUT_EVENT, REFRESH_TOKEN_KEY } from '../constants'
-import { REFRESH_TOKEN_ENDPOINT, refreshToken } from './services/auth/refresh-token'
+import { ACCESS_TOKEN_KEY, LOGOUT_EVENT, REFRESH_TOKEN_KEY } from '../constants'
+import { REFRESH_TOKEN_ENDPOINT, refreshToken, removeTokens, setTokens } from './services'
 import type { ApiError } from './types'
 
 const client = axios.create({
@@ -56,19 +56,15 @@ client.interceptors.response.use(
       originalRequest._retry = true
       try {
         const token = localStorage.getItem(REFRESH_TOKEN_KEY)!
-        const { access_token, refresh_token, expiration_date } = await refreshToken({ token })
+        const refreshedToken = await refreshToken({ token })
 
-        localStorage.setItem(ACCESS_TOKEN_KEY, access_token)
-        localStorage.setItem(REFRESH_TOKEN_KEY, refresh_token)
-        localStorage.setItem(EXPIRATION_DATE_KEY, expiration_date)
+        setTokens(refreshedToken)
 
         return client(originalRequest)
       } catch (err: unknown) {
         const refreshError = err as AxiosError
 
-        localStorage.removeItem(ACCESS_TOKEN_KEY)
-        localStorage.removeItem(REFRESH_TOKEN_KEY)
-        localStorage.removeItem(EXPIRATION_DATE_KEY)
+        removeTokens()
 
         window.dispatchEvent(new Event(LOGOUT_EVENT))
 

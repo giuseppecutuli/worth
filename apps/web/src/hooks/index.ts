@@ -1,2 +1,2 @@
-export * from './useSignIn.hook'
+export * from './useAuthentication.hook'
 export * from './useValidationError.hook'

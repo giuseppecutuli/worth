@@ -11,15 +11,16 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as LoginImport } from './routes/login'
+import { Route as guestImport } from './routes/__guest'
 import { Route as authImport } from './routes/__auth'
 import { Route as authIndexImport } from './routes/__auth.index'
+import { Route as guestRegisterImport } from './routes/__guest.register'
+import { Route as guestLoginImport } from './routes/__guest.login'
 
 // Create/Update Routes
 
-const LoginRoute = LoginImport.update({
-  id: '/login',
-  path: '/login',
+const guestRoute = guestImport.update({
+  id: '/__guest',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -34,6 +35,18 @@ const authIndexRoute = authIndexImport.update({
   getParentRoute: () => authRoute,
 } as any)
 
+const guestRegisterRoute = guestRegisterImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => guestRoute,
+} as any)
+
+const guestLoginRoute = guestLoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => guestRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -45,12 +58,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authImport
       parentRoute: typeof rootRoute
     }
-    '/login': {
-      id: '/login'
+    '/__guest': {
+      id: '/__guest'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof guestImport
+      parentRoute: typeof rootRoute
+    }
+    '/__guest/login': {
+      id: '/__guest/login'
       path: '/login'
       fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof guestLoginImport
+      parentRoute: typeof guestImport
+    }
+    '/__guest/register': {
+      id: '/__guest/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof guestRegisterImport
+      parentRoute: typeof guestImport
     }
     '/__auth/': {
       id: '/__auth/'
@@ -74,41 +101,64 @@ const authRouteChildren: authRouteChildren = {
 
 const authRouteWithChildren = authRoute._addFileChildren(authRouteChildren)
 
+interface guestRouteChildren {
+  guestLoginRoute: typeof guestLoginRoute
+  guestRegisterRoute: typeof guestRegisterRoute
+}
+
+const guestRouteChildren: guestRouteChildren = {
+  guestLoginRoute: guestLoginRoute,
+  guestRegisterRoute: guestRegisterRoute,
+}
+
+const guestRouteWithChildren = guestRoute._addFileChildren(guestRouteChildren)
+
 export interface FileRoutesByFullPath {
-  '': typeof authRouteWithChildren
-  '/login': typeof LoginRoute
+  '': typeof guestRouteWithChildren
+  '/login': typeof guestLoginRoute
+  '/register': typeof guestRegisterRoute
   '/': typeof authIndexRoute
 }
 
 export interface FileRoutesByTo {
-  '/login': typeof LoginRoute
+  '': typeof guestRouteWithChildren
+  '/login': typeof guestLoginRoute
+  '/register': typeof guestRegisterRoute
   '/': typeof authIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/__auth': typeof authRouteWithChildren
-  '/login': typeof LoginRoute
+  '/__guest': typeof guestRouteWithChildren
+  '/__guest/login': typeof guestLoginRoute
+  '/__guest/register': typeof guestRegisterRoute
   '/__auth/': typeof authIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '' | '/login' | '/'
+  fullPaths: '' | '/login' | '/register' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/'
-  id: '__root__' | '/__auth' | '/login' | '/__auth/'
+  to: '' | '/login' | '/register' | '/'
+  id:
+    | '__root__'
+    | '/__auth'
+    | '/__guest'
+    | '/__guest/login'
+    | '/__guest/register'
+    | '/__auth/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   authRoute: typeof authRouteWithChildren
-  LoginRoute: typeof LoginRoute
+  guestRoute: typeof guestRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   authRoute: authRouteWithChildren,
-  LoginRoute: LoginRoute,
+  guestRoute: guestRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -122,7 +172,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/__auth",
-        "/login"
+        "/__guest"
       ]
     },
     "/__auth": {
@@ -131,8 +181,20 @@ export const routeTree = rootRoute
         "/__auth/"
       ]
     },
-    "/login": {
-      "filePath": "login.tsx"
+    "/__guest": {
+      "filePath": "__guest.tsx",
+      "children": [
+        "/__guest/login",
+        "/__guest/register"
+      ]
+    },
+    "/__guest/login": {
+      "filePath": "__guest.login.tsx",
+      "parent": "/__guest"
+    },
+    "/__guest/register": {
+      "filePath": "__guest.register.tsx",
+      "parent": "/__guest"
     },
     "/__auth/": {
       "filePath": "__auth.index.tsx",

@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { type PropsWithChildren, useEffect, useState } from 'react'
 
-import { me, ME_ENDPOINT, removeTokens } from '@/lib/api'
-import { ACCESS_TOKEN_KEY, LOGIN_EVENT, LOGOUT_EVENT } from '@/lib/constants'
+import { me, ME_ENDPOINT, removeTokens, setTokens, type Token } from '@/lib/api'
+import { ACCESS_TOKEN_KEY, LOGOUT_EVENT } from '@/lib/constants'
 
 import { AuthContext, type AuthContextType } from './auth.context'
 
@@ -16,12 +16,8 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     enabled: isAuthenticated,
   })
 
-  const value: AuthContextType = {
-    isAuthenticated,
-    user,
-  }
-
-  const login = () => {
+  const login = (token: Token) => {
+    setTokens(token)
     setIsAuthenticated(true)
   }
 
@@ -30,19 +26,18 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     setIsAuthenticated(false)
   }
 
+  const value: AuthContextType = {
+    isAuthenticated,
+    login,
+    logout,
+    user,
+  }
+
   useEffect(() => {
-    window.addEventListener(LOGIN_EVENT, login)
+    document.addEventListener(LOGOUT_EVENT, logout)
 
     return () => {
-      window.removeEventListener(LOGIN_EVENT, login)
-    }
-  }, [])
-
-  useEffect(() => {
-    window.addEventListener(LOGOUT_EVENT, logout)
-
-    return () => {
-      window.removeEventListener(LOGOUT_EVENT, logout)
+      document.removeEventListener(LOGOUT_EVENT, logout)
     }
   }, [])
 
