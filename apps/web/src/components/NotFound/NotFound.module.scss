@@ -1,0 +1,41 @@
+.root {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.inner {
+  position: relative;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  opacity: 0.75;
+  color: light-dark(var(--mantine-color-teal-0), var(--mantine-color-teal-1));
+}
+
+.content {
+  padding-top: 220px;
+  position: relative;
+  z-index: 1;
+
+  @media (max-width: var(--mantine-breakpoint-sm)) {
+    padding-top: 120px;
+  }
+}
+
+.title {
+  text-align: center;
+  font-size: 38px;
+
+  @media (max-width: var(--mantine-breakpoint-sm)) {
+    font-size: 32px;
+  }
+}
+
+.description {
+  max-width: 540px;
+  margin: auto;
+  margin-top: var(--mantine-spacing-xl);
+  margin-bottom: calc(var(--mantine-spacing-xl) * 1.5);
+}

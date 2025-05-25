@@ -1,5 +1,6 @@
 import { createRouter } from '@tanstack/react-router'
 
+import { NotFound } from '@/components/NotFound'
 import { routeTree } from '@/routeTree.gen'
 
 import type { AuthContextType } from '../Auth'
@@ -14,5 +15,6 @@ const initialContext: RouterContext = {
 
 export const reactRouter = createRouter({
   routeTree,
+  defaultNotFoundComponent: NotFound,
   context: initialContext,
 })

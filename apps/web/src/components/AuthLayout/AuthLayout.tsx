@@ -7,9 +7,7 @@ export const AuthLayout: React.FC = () => {
   return (
     <Flex>
       <Navbar />
-      <div>
-        <Outlet />
-      </div>
+      <Outlet />
     </Flex>
   )
 }
