@@ -1,4 +1,6 @@
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
+
+import { AuthLayout } from '@/components/AuthLayout'
 
 export const Route = createFileRoute('/__auth')({
   component: AuthLayout,
@@ -10,14 +12,3 @@ export const Route = createFileRoute('/__auth')({
     }
   },
 })
-
-function AuthLayout() {
-  return (
-    <div className="p-2 h-full">
-      <h1>Authenticated Route</h1>
-      <p>This route's content is only visible to authenticated users.</p>
-      <hr />
-      <Outlet />
-    </div>
-  )
-}
