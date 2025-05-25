@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react'
 
 import { Logo } from '@/components/Logo'
 import { NavLink, type NavLinkProps } from '@/components/NavLink'
+import { UserButton } from '@/components/UserButton'
 import { useAuthentication } from '@/hooks'
 
 import classes from './Navbar.module.scss'
@@ -71,7 +72,9 @@ export const Navbar: React.FC = () => {
         </Flex>
       </Box>
 
-      <Box mt="md" pt="md" className={classes.footer}>
+      <Box>
+        <UserButton collapsed={collapsed} />
+        <Box m="md" className={classes.divider} />
         <NavLink
           collapsed={collapsed}
           label="Collapse"
