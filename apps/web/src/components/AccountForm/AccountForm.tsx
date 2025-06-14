@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import z from 'zod'
+import { z } from 'zod/v4'
 
 import { type FieldConfig, Form } from '@/components'
 import { useAuth } from '@/contexts/Auth'
@@ -15,7 +15,7 @@ export const AccountForm: React.FC = () => {
       placeholder: t('form.enterFirstName'),
       type: 'text',
       defaultValue: user?.first_name || '',
-      schema: z.string().min(1, { message: t('form.enterFirstName') }),
+      schema: z.string().min(1, { error: t('form.enterFirstName') }),
     },
     {
       name: 'last_name',
@@ -23,7 +23,7 @@ export const AccountForm: React.FC = () => {
       placeholder: t('form.enterLastName'),
       type: 'text',
       defaultValue: user?.last_name || '',
-      schema: z.string().min(1, { message: t('form.enterLastName') }),
+      schema: z.string().min(1, { error: t('form.enterLastName') }),
     },
     {
       name: 'email',
@@ -33,7 +33,7 @@ export const AccountForm: React.FC = () => {
       defaultValue: user?.email || '',
       readOnly: true,
       disabled: true,
-      schema: z.string().email({ message: t('form.invalidEmail') }),
+      schema: z.email({ error: t('form.invalidEmail') }),
     },
   ]
 

@@ -1,10 +1,10 @@
 import { Button, type ButtonProps, Text } from '@mantine/core'
 import { useForm } from '@mantine/form'
-import { zodResolver } from 'mantine-form-zod-resolver'
+import { zod4Resolver } from 'mantine-form-zod-resolver'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { isDefined } from 'remeda'
-import z, { type ZodFirstPartySchemaTypes } from 'zod'
+import z, { type ZodType } from 'zod/v4'
 
 import { type FieldConfig, FormField } from '@/components'
 import { useValidationError } from '@/hooks'
@@ -24,18 +24,15 @@ type FormProps<T = any> = {
 export const Form: React.FC<FormProps> = ({ fields, onSubmit, error, loading, submit = {} }) => {
   const { t } = useTranslation()
   const schema = useMemo(() => {
-    const validationFields = fields.reduce<Record<string, ZodFirstPartySchemaTypes>>(
-      (acc, field) => {
-        if (!field.schema) {
-          return acc
-        }
-
-        acc[field.name] = field.schema
-
+    const validationFields = fields.reduce<Record<string, ZodType>>((acc, field) => {
+      if (!field.schema) {
         return acc
-      },
-      {},
-    )
+      }
+
+      acc[field.name] = field.schema
+
+      return acc
+    }, {})
 
     return z.object(validationFields)
   }, [fields])
@@ -53,7 +50,7 @@ export const Form: React.FC<FormProps> = ({ fields, onSubmit, error, loading, su
   const form = useForm({
     mode: 'uncontrolled',
     initialValues,
-    validate: zodResolver(schema),
+    validate: zod4Resolver(schema),
   })
 
   useValidationError(form, error)

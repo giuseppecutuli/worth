@@ -1,7 +1,7 @@
 import type { BoxProps, ComboboxData } from '@mantine/core'
 import type { UseFormReturnType } from '@mantine/form'
 import type { ReactNode } from 'react'
-import type { ZodFirstPartySchemaTypes } from 'zod'
+import type { ZodType } from 'zod/v4'
 
 export type FieldType =
   | 'text'
@@ -28,7 +28,7 @@ export type FieldConfig = {
   defaultValue?: string | number | boolean
   before?: React.ReactNode
   after?: React.ReactNode
-  schema?: ZodFirstPartySchemaTypes
+  schema?: ZodType
   placeholder?: string
   disabled?: boolean
   readOnly?: boolean

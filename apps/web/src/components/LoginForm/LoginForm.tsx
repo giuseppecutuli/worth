@@ -1,6 +1,6 @@
 import { Paper } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
-import { z } from 'zod'
+import { z } from 'zod/v4'
 
 import { type FieldConfig, Form, Link } from '@/components'
 import { useAuthentication } from '@/hooks'
@@ -16,15 +16,17 @@ export const LoginForm: React.FC = () => {
       name: 'email',
       label: t('form.email'),
       placeholder: t('form.enterEmail'),
+      defaultValue: '',
       type: 'email',
-      schema: z.string().email({ message: t('form.invalidEmail') }),
+      schema: z.email({ error: t('form.invalidEmail') }),
     },
     {
       name: 'password',
       label: t('form.password'),
       placeholder: t('form.enterPassword'),
+      defaultValue: '',
       type: 'password',
-      schema: z.string().min(8, { message: t('form.passwordInvalid') }),
+      schema: z.string().min(8, { error: t('form.passwordInvalid') }),
     },
     {
       name: 'rememberMe',
