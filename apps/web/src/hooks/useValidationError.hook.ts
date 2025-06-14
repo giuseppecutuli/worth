@@ -3,7 +3,10 @@ import { useEffect } from 'react'
 
 import type { ApiError } from '@/lib/api'
 
-export const useValidationError = (form: UseFormReturnType<any>, error: ApiError | null) => {
+export const useValidationError = (
+  form: UseFormReturnType<any>,
+  error: ApiError | null | undefined,
+) => {
   useEffect(() => {
     if (!error) {
       return

@@ -1,13 +1,17 @@
-import { Flex } from '@mantine/core'
+import { Box, Container, Flex } from '@mantine/core'
 import { Outlet } from '@tanstack/react-router'
 
-import { Navbar } from '../Navbar'
+import { Navbar } from '@/components'
 
 export const AuthLayout: React.FC = () => {
   return (
     <Flex>
       <Navbar />
-      <Outlet />
+      <Box w="100%">
+        <Container py="md">
+          <Outlet />
+        </Container>
+      </Box>
     </Flex>
   )
 }

@@ -1,0 +1,15 @@
+.list {
+  gap: 20px;
+  &::before {
+    display: none;
+  }
+}
+
+.tab {
+  font-weight: 600;
+  font-size: var(--mantine-font-size-md);
+
+  &[data-active] {
+    color: var(--mantine-color-teal-7);
+  }
+}

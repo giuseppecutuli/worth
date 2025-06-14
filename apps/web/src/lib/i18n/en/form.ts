@@ -1,4 +1,5 @@
 export const form = {
+  submit: 'Submit',
   login: {
     submit: 'Login',
     notHaveAccount: "Don't have an account yet?",

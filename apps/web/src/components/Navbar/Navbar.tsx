@@ -29,7 +29,7 @@ const data: NavLinkProps[] = [
   { to: '/other' as any, label: 'SSH Keys', icon: IconKey },
   { to: '/other' as any, label: 'Databases', icon: IconDatabaseImport },
   { to: '/other' as any, label: 'Authentication', icon: Icon2fa },
-  { to: '/other' as any, label: 'Other Settings', icon: IconSettings },
+  { to: '/settings', label: 'Settings', icon: IconSettings },
 ]
 
 export const Navbar: React.FC = () => {
