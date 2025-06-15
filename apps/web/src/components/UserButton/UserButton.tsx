@@ -1,5 +1,5 @@
 import { Avatar, Box, Group, Text, UnstyledButton } from '@mantine/core'
-import { IconChevronRight } from '@tabler/icons-react'
+import { LuChevronRight } from 'react-icons/lu'
 
 import { useAuth } from '@/contexts/Auth'
 
@@ -28,7 +28,7 @@ export const UserButton: React.FC<Props> = ({ collapsed }) => {
           </Text>
         </Box>
 
-        <IconChevronRight display={collapsed ? 'none' : 'block'} size={14} stroke={1.5} />
+        <LuChevronRight display={collapsed ? 'none' : 'block'} size={14} color="currentColor" />
       </Group>
     </UnstyledButton>
   )

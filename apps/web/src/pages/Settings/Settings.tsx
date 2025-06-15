@@ -1,5 +1,4 @@
 import { Paper, Tabs } from '@mantine/core'
-import { IconMessageCircle, IconPhoto } from '@tabler/icons-react'
 
 import { AccountForm } from '@/components/AccountForm'
 
