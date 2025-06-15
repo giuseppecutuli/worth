@@ -2,12 +2,12 @@ $border: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-d
 
 .navbar {
   height: 100dvh;
-  width: 300px;
+  flex: 1 0 300px;
   border-right: $border;
 }
 
 .navbar--collapsed {
-  width: 70px;
+  flex-basis: 70px;
 }
 
 .header {
