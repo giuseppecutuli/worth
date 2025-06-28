@@ -6,7 +6,11 @@ import { ApiPaginatedResponse } from '@/common/utils/swagger'
 import { User } from '@/users/entities'
 
 import { AccountCategoriesService } from './account-categories.service'
-import { AccountCategoryListDto, CreateAccountCategoryDto, UpdateAccountCategoryDto } from './dtos/requests'
+import {
+  AccountCategoryListDto,
+  CreateAccountCategoryDto,
+  UpdateAccountCategoryDto,
+} from './dtos/requests'
 import { AccountCategory } from './entities'
 
 @Controller('account-categories')

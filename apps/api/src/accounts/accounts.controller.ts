@@ -69,7 +69,11 @@ export class AccountsController {
   @Put(':id')
   @UseAuth()
   @ApiOkResponse({ type: Account })
-  update(@Param('id') id: string, @Body() body: UpdateAccountDto, @UseUser() user: User): Promise<Account> {
+  update(
+    @Param('id') id: string,
+    @Body() body: UpdateAccountDto,
+    @UseUser() user: User,
+  ): Promise<Account> {
     return this.service.update(id, body, user)
   }
 

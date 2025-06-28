@@ -4,7 +4,11 @@ import { Prisma } from '@prisma/client'
 import { CrudService } from '@/common/services/crud.service'
 import { PrismaService } from '@/prisma/prisma.service'
 
-import { CreateInvestmentTransactionDto, InvestmentTransactionListDto, UpdateInvestmentTransactionDto } from './dtos/requests'
+import {
+  CreateInvestmentTransactionDto,
+  InvestmentTransactionListDto,
+  UpdateInvestmentTransactionDto,
+} from './dtos/requests'
 import { InvestmentTransaction } from './entities'
 
 /**
@@ -28,7 +32,9 @@ export class InvestmentTransactionsService extends CrudService<
    * @param query - Query params
    * @returns {object} - The where clause
    */
-  protected buildWhere(query: InvestmentTransactionListDto): Prisma.InvestmentTransactionWhereInput {
+  protected buildWhere(
+    query: InvestmentTransactionListDto,
+  ): Prisma.InvestmentTransactionWhereInput {
     return {
       account_id: query.account_id,
       asset_id: query.asset_id,

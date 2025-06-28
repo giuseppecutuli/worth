@@ -13,7 +13,12 @@ import { Account } from './entities'
  * @extends CrudService
  */
 @Injectable()
-export class AccountsService extends CrudService<Account, CreateAccountDto, UpdateAccountDto, AccountListDto> {
+export class AccountsService extends CrudService<
+  Account,
+  CreateAccountDto,
+  UpdateAccountDto,
+  AccountListDto
+> {
   constructor(prisma: PrismaService) {
     super(prisma, 'Account')
   }

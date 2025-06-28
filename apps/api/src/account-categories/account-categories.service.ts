@@ -4,7 +4,11 @@ import { Prisma } from '@prisma/client'
 import { CrudService } from '@/common/services/crud.service'
 import { PrismaService } from '@/prisma/prisma.service'
 
-import { AccountCategoryListDto, CreateAccountCategoryDto, UpdateAccountCategoryDto } from './dtos/requests'
+import {
+  AccountCategoryListDto,
+  CreateAccountCategoryDto,
+  UpdateAccountCategoryDto,
+} from './dtos/requests'
 import { AccountCategory } from './entities'
 
 /**

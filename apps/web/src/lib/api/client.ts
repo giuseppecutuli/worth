@@ -51,7 +51,11 @@ client.interceptors.response.use(
     // If the request failed due to an expired token, refresh it.
     // Do not refresh the token if the request is already a refresh token request.
     // Do not refresh the token if the request has already been retried.
-    if (error.response.status === 401 && originalRequest.url !== REFRESH_TOKEN_ENDPOINT && !originalRequest._retry) {
+    if (
+      error.response.status === 401 &&
+      originalRequest.url !== REFRESH_TOKEN_ENDPOINT &&
+      !originalRequest._retry
+    ) {
       // Mark the request as retried to avoid infinite loops.
       originalRequest._retry = true
       try {

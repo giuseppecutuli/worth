@@ -68,7 +68,11 @@ export class BudgetsController {
   @Put(':id')
   @UseAuth()
   @ApiOkResponse({ type: Budget })
-  update(@Param('id') id: string, @Body() body: UpdateBudgetDto, @UseUser() user: User): Promise<Budget> {
+  update(
+    @Param('id') id: string,
+    @Body() body: UpdateBudgetDto,
+    @UseUser() user: User,
+  ): Promise<Budget> {
     return this.service.update(id, body, user)
   }
 

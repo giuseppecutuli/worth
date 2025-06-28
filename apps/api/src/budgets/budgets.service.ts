@@ -12,7 +12,12 @@ import { Budget } from './entities'
  * @extends CrudService
  */
 @Injectable()
-export class BudgetsService extends CrudService<Budget, CreateBudgetDto, UpdateBudgetDto, BudgetListDto> {
+export class BudgetsService extends CrudService<
+  Budget,
+  CreateBudgetDto,
+  UpdateBudgetDto,
+  BudgetListDto
+> {
   constructor(prisma: PrismaService) {
     super(prisma, 'Budget')
   }

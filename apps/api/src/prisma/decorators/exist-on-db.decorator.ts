@@ -19,7 +19,10 @@ type Options = {
 export class PrismaExistValidator implements ValidatorConstraintInterface {
   constructor(private readonly prisma: PrismaService) {}
 
-  async validate(value: string | number | string[] | number[], args: ValidationArguments): Promise<boolean> {
+  async validate(
+    value: string | number | string[] | number[],
+    args: ValidationArguments,
+  ): Promise<boolean> {
     const [property] = args.constraints
     const { entity, field } = property as Options
 

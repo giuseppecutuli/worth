@@ -1,6 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { Type } from 'class-transformer'
-import { ArrayMinSize, IsArray, IsDate, IsNumber, IsOptional, IsString, IsUUID } from 'class-validator'
+import {
+  ArrayMinSize,
+  IsArray,
+  IsDate,
+  IsNumber,
+  IsOptional,
+  IsString,
+  IsUUID,
+} from 'class-validator'
 
 import { ExistOnDb } from '@/prisma/decorators/exist-on-db.decorator'
 

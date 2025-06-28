@@ -8,7 +8,12 @@ import { AssetListDto, CreateAssetDto, UpdateAssetDto } from './dtos/requests'
 import { Asset } from './entities'
 
 @Injectable()
-export class AssetsService extends CrudService<Asset, CreateAssetDto, UpdateAssetDto, AssetListDto> {
+export class AssetsService extends CrudService<
+  Asset,
+  CreateAssetDto,
+  UpdateAssetDto,
+  AssetListDto
+> {
   constructor(prisma: PrismaService) {
     super(prisma, 'Asset')
   }

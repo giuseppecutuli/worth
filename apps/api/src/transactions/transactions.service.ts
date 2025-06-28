@@ -12,7 +12,12 @@ import { Transaction } from './entities'
  * @extends CrudService
  */
 @Injectable()
-export class TransactionsService extends CrudService<Transaction, CreateTransactionDto, UpdateTransactionDto, TransactionListDto> {
+export class TransactionsService extends CrudService<
+  Transaction,
+  CreateTransactionDto,
+  UpdateTransactionDto,
+  TransactionListDto
+> {
   constructor(prisma: PrismaService) {
     super(prisma, 'Transaction')
   }

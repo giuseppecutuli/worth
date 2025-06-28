@@ -1,5 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { InvestmentTransaction as PrismaInvestmentTransaction, InvestmentTransactionType, Prisma } from '@prisma/client'
+import {
+  InvestmentTransaction as PrismaInvestmentTransaction,
+  InvestmentTransactionType,
+  Prisma,
+} from '@prisma/client'
 
 import { BaseEntityDto } from '@/common/dtos'
 

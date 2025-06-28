@@ -9,7 +9,10 @@ import { SortDirection } from '@/common/types'
  * @param validationOptions - Optional validation options.
  * @returns A decorator that validates the order of a field.
  */
-export function IsValidOrder(allowedFields: string[], validationOptions?: ValidationOptions): PropertyDecorator {
+export function IsValidOrder(
+  allowedFields: string[],
+  validationOptions?: ValidationOptions,
+): PropertyDecorator {
   return function (object: object, propertyName: string | symbol) {
     registerDecorator({
       name: 'isValidOrder',

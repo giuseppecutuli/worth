@@ -5,7 +5,11 @@ import { UseAuth, UseUser } from '@/auth/decorators'
 import { ApiPaginatedResponse } from '@/common/utils/swagger'
 import { User } from '@/users/entities'
 
-import { CreateTransactionCategoryDto, TransactionCategoryListDto, UpdateTransactionCategoryDto } from './dtos/requests'
+import {
+  CreateTransactionCategoryDto,
+  TransactionCategoryListDto,
+  UpdateTransactionCategoryDto,
+} from './dtos/requests'
 import { TransactionCategory } from './entities'
 import { TransactionCategoriesService } from './transaction-categories.service'
 
@@ -37,7 +41,11 @@ export class TransactionCategoriesController {
   @Put(':id')
   @UseAuth()
   @ApiOkResponse({ type: TransactionCategory })
-  update(@Param('id') id: string, @Body() body: UpdateTransactionCategoryDto, @UseUser() user: User) {
+  update(
+    @Param('id') id: string,
+    @Body() body: UpdateTransactionCategoryDto,
+    @UseUser() user: User,
+  ) {
     return this.service.update(id, body, user)
   }
 

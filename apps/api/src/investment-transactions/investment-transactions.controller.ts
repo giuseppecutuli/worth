@@ -6,7 +6,11 @@ import { PaginatedDto } from '@/common/dtos'
 import { ApiPaginatedResponse } from '@/common/utils/swagger'
 import { User } from '@/users/entities'
 
-import { CreateInvestmentTransactionDto, InvestmentTransactionListDto, UpdateInvestmentTransactionDto } from './dtos/requests'
+import {
+  CreateInvestmentTransactionDto,
+  InvestmentTransactionListDto,
+  UpdateInvestmentTransactionDto,
+} from './dtos/requests'
 import { InvestmentTransaction } from './entities'
 import { InvestmentTransactionsService } from './investment-transactions.service'
 
@@ -25,7 +29,10 @@ export class InvestmentTransactionsController {
   @Get()
   @UseAuth()
   @ApiPaginatedResponse(InvestmentTransaction)
-  list(@Query() query: InvestmentTransactionListDto, @UseUser() user: User): Promise<PaginatedDto<InvestmentTransaction>> {
+  list(
+    @Query() query: InvestmentTransactionListDto,
+    @UseUser() user: User,
+  ): Promise<PaginatedDto<InvestmentTransaction>> {
     return this.service.list(query, user)
   }
 
@@ -39,7 +46,10 @@ export class InvestmentTransactionsController {
   @Post()
   @UseAuth()
   @ApiOkResponse({ type: InvestmentTransaction })
-  create(@Body() body: CreateInvestmentTransactionDto, @UseUser() user: User): Promise<InvestmentTransaction> {
+  create(
+    @Body() body: CreateInvestmentTransactionDto,
+    @UseUser() user: User,
+  ): Promise<InvestmentTransaction> {
     return this.service.create(body, user)
   }
 
@@ -68,7 +78,11 @@ export class InvestmentTransactionsController {
   @Put(':id')
   @UseAuth()
   @ApiOkResponse({ type: InvestmentTransaction })
-  update(@Param('id') id: string, @Body() body: UpdateInvestmentTransactionDto, @UseUser() user: User): Promise<InvestmentTransaction> {
+  update(
+    @Param('id') id: string,
+    @Body() body: UpdateInvestmentTransactionDto,
+    @UseUser() user: User,
+  ): Promise<InvestmentTransaction> {
     return this.service.update(id, body, user)
   }
 

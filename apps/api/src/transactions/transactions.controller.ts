@@ -25,7 +25,10 @@ export class TransactionsController {
   @Get()
   @UseAuth()
   @ApiPaginatedResponse(Transaction)
-  list(@Query() query: TransactionListDto, @UseUser() user: User): Promise<PaginatedDto<Transaction>> {
+  list(
+    @Query() query: TransactionListDto,
+    @UseUser() user: User,
+  ): Promise<PaginatedDto<Transaction>> {
     return this.service.list(query, user)
   }
 
@@ -68,7 +71,11 @@ export class TransactionsController {
   @Put(':id')
   @UseAuth()
   @ApiOkResponse({ type: Transaction })
-  update(@Param('id') id: string, @Body() body: UpdateTransactionDto, @UseUser() user: User): Promise<Transaction> {
+  update(
+    @Param('id') id: string,
+    @Body() body: UpdateTransactionDto,
+    @UseUser() user: User,
+  ): Promise<Transaction> {
     return this.service.update(id, body, user)
   }
 

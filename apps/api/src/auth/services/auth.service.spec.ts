@@ -5,7 +5,14 @@ import { Test, TestingModule } from '@nestjs/testing'
 import { RefreshToken, User } from '@prisma/client'
 
 import { AuthMessages } from '@/auth/auth.constants'
-import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignOutDto, SignUpDto } from '@/auth/dtos/requests'
+import {
+  ForgotPasswordDto,
+  RefreshTokenDto,
+  ResetPasswordDto,
+  SignInDto,
+  SignOutDto,
+  SignUpDto,
+} from '@/auth/dtos/requests'
 import { PrismaService } from '@/prisma/prisma.service'
 
 import { AuthService } from './auth.service'
@@ -199,7 +206,9 @@ describe('AuthService', () => {
 
       const user = { id: 'anotherUserId' } as User
 
-      await expect(authService.signOut({ refresh_token: 'token' }, user)).rejects.toThrow(ConflictException)
+      await expect(authService.signOut({ refresh_token: 'token' }, user)).rejects.toThrow(
+        ConflictException,
+      )
     })
 
     it('should remove refresh token from user', async () => {
@@ -249,7 +258,12 @@ describe('AuthService', () => {
     })
 
     it('should reset password if token is valid', async () => {
-      const user = { id: 'userId', reset_token: 'token', reset_token_expiration: new Date(), password: 'password' } as User
+      const user = {
+        id: 'userId',
+        reset_token: 'token',
+        reset_token_expiration: new Date(),
+        password: 'password',
+      } as User
       jest.spyOn(prisma.user, 'findFirst').mockResolvedValue(user)
       jest.spyOn(PasswordService, 'hashPassword').mockResolvedValue('hashedPassword')
 

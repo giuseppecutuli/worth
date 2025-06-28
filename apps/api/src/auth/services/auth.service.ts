@@ -5,7 +5,14 @@ import { Role } from '@prisma/client'
 import { jwtDecode, JwtPayload as JwtDecodePayload } from 'jwt-decode'
 
 import { AuthErrors, AuthMessages, RESET_TOKEN_DURATION } from '@/auth/auth.constants'
-import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignOutDto, SignUpDto } from '@/auth/dtos/requests'
+import {
+  ForgotPasswordDto,
+  RefreshTokenDto,
+  ResetPasswordDto,
+  SignInDto,
+  SignOutDto,
+  SignUpDto,
+} from '@/auth/dtos/requests'
 import { Token } from '@/auth/dtos/responses'
 import { JwtPayload } from '@/auth/interfaces'
 import { randomString } from '@/common/utils'
