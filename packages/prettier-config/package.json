@@ -8,6 +8,6 @@
     "./base": "./base.js"
   },
   "devDependencies": {
-    "prettier": "^3.5.3"
+    "prettier": "^3.6.2"
   }
 }

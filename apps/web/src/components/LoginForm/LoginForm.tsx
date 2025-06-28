@@ -35,6 +35,7 @@ export const LoginForm: React.FC = () => {
       defaultValue: false,
       schema: z.boolean().optional(),
       after: (
+        // @ts-ignore
         <Link to="/forgot-password" size="sm">
           {t('form.forgotPassword')}
         </Link>

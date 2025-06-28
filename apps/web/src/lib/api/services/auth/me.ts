@@ -1,5 +1,5 @@
 import { client } from '../../client'
-import type { User } from './types'
+import type { User } from '../users'
 
 export const ME_ENDPOINT = '/auth/me'
 
