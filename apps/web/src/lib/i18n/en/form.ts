@@ -22,4 +22,12 @@ export const form = {
   lastName: 'Last name',
   enterFirstName: 'Enter your first name',
   enterLastName: 'Enter your last name',
+  security: {
+    currentPassword: 'Current password',
+    newPassword: 'New password',
+    confirmPassword: 'Confirm password',
+    enterNewPassword: 'Enter your new password',
+    enterConfirmPassword: 'Enter your confirm password',
+    passwordsDoNotMatch: 'Passwords do not match',
+  },
 }

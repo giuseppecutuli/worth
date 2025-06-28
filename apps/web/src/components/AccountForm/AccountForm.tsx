@@ -2,11 +2,14 @@ import { useTranslation } from 'react-i18next'
 import { z } from 'zod/v4'
 
 import { type FieldConfig, Form } from '@/components'
-import { useAuth } from '@/contexts/Auth'
+import { useUser } from '@/hooks/useUser.hook'
 
 export const AccountForm: React.FC = () => {
   const { t } = useTranslation()
-  const { user } = useAuth()
+  const {
+    user,
+    updateUser: { status, mutate, error },
+  } = useUser()
 
   const fields: FieldConfig[] = [
     {
@@ -41,5 +44,5 @@ export const AccountForm: React.FC = () => {
     return null
   }
 
-  return <Form fields={fields} loading={false} onSubmit={console.log} />
+  return <Form fields={fields} loading={status === 'pending'} onSubmit={mutate} error={error} />
 }

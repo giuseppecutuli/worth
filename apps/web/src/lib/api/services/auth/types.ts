@@ -32,18 +32,3 @@ export interface Token {
   refresh_token: string
   expiration_date: string
 }
-
-export enum Role {
-  ADMIN = 'ADMIN',
-  USER = 'USER',
-}
-
-export interface User {
-  id: string
-  created_at: Date
-  updated_at: Date
-  first_name: string
-  last_name: string
-  email: string
-  role: Role
-}

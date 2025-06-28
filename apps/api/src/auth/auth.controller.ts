@@ -1,11 +1,26 @@
-import { Body, Controller, Get, Post } from '@nestjs/common'
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Post,
+  SerializeOptions,
+  UseInterceptors,
+} from '@nestjs/common'
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 
 import { User } from '@/users/entities'
 
 import { UseAuth } from './decorators/auth.decorator'
 import { UseUser } from './decorators/user.decorator'
-import { ForgotPasswordDto, RefreshTokenDto, ResetPasswordDto, SignInDto, SignOutDto, SignUpDto } from './dtos/requests'
+import {
+  ForgotPasswordDto,
+  RefreshTokenDto,
+  ResetPasswordDto,
+  SignInDto,
+  SignOutDto,
+  SignUpDto,
+} from './dtos/requests'
 import { Token } from './dtos/responses'
 import { AuthService } from './services/auth.service'
 
@@ -32,6 +47,8 @@ export class AuthController {
 
   @Get('me')
   @UseAuth()
+  @UseInterceptors(ClassSerializerInterceptor)
+  @SerializeOptions({ type: User })
   @ApiOkResponse({
     type: User,
   })

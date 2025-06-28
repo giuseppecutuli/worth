@@ -7,6 +7,7 @@ export type AuthContextType = {
   login: (token: Token) => void
   logout: () => void
   user?: User
+  refetchUser?: () => void
 }
 
 export const AuthContext = createContext<AuthContextType>({

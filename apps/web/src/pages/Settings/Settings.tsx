@@ -1,13 +1,16 @@
 import { Paper, Tabs } from '@mantine/core'
+import { useTranslation } from 'react-i18next'
 
-import { AccountForm } from '@/components/AccountForm'
+import { AccountForm, SecurityForm } from '@/components'
 
 import classes from './Settings.module.scss'
 
 export const SettingsPage: React.FC = () => {
+  const { t } = useTranslation()
+
   const tabs = [
-    { value: 'account', label: 'Account', content: <AccountForm /> },
-    { value: 'settings', label: 'Settings', content: null },
+    { value: 'account', label: t('general.account'), content: <AccountForm /> },
+    { value: 'security', label: t('general.security'), content: <SecurityForm /> },
   ]
 
   return (

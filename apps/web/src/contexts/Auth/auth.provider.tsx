@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return !!localStorage.getItem(ACCESS_TOKEN_KEY)
   })
-  const { data: user } = useQuery({
+  const { data: user, refetch } = useQuery({
     queryKey: [ME_ENDPOINT],
     queryFn: me,
     enabled: isAuthenticated,
@@ -31,6 +31,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     login,
     logout,
     user,
+    refetchUser: refetch,
   }
 
   useEffect(() => {
