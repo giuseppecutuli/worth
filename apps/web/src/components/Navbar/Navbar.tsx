@@ -1,9 +1,15 @@
 import { Box, Code, Flex, Group } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
+import {
+  IconBellRinging,
+  IconLayoutSidebarLeftCollapse,
+  IconLayoutSidebarRightCollapse,
+  IconLogout,
+  IconReceipt2,
+  IconSettings,
+} from '@tabler/icons-react'
 import clsx from 'clsx'
 import { useEffect, useState } from 'react'
-import { GoSidebarCollapse, GoSidebarExpand } from 'react-icons/go'
-import { LuBellRing, LuLogOut, LuReceipt, LuSettings } from 'react-icons/lu'
 
 import { Logo } from '@/components/Logo'
 import { NavLink, type NavLinkProps } from '@/components/NavLink'
@@ -13,9 +19,9 @@ import { useAuthentication } from '@/hooks'
 import classes from './Navbar.module.scss'
 
 const data: NavLinkProps[] = [
-  { to: '/', label: 'Notifications', icon: LuBellRing },
-  { to: '/other' as any, label: 'Billing', icon: LuReceipt },
-  { to: '/settings', label: 'Settings', icon: LuSettings },
+  { to: '/', label: 'Notifications', icon: IconBellRinging },
+  { to: '/accounts' as any, label: 'Accounts', icon: IconReceipt2 },
+  { to: '/settings', label: 'Settings', icon: IconSettings },
 ]
 
 export const Navbar: React.FC = () => {
@@ -64,10 +70,10 @@ export const Navbar: React.FC = () => {
         <NavLink
           collapsed={collapsed}
           label="Collapse"
-          icon={collapsed ? GoSidebarCollapse : GoSidebarExpand}
+          icon={collapsed ? IconLayoutSidebarRightCollapse : IconLayoutSidebarLeftCollapse}
           onClick={() => setCollapsed(!collapsed)}
         />
-        <NavLink collapsed={collapsed} label="Logout" icon={LuLogOut} onClick={signOut.mutate} />
+        <NavLink collapsed={collapsed} label="Logout" icon={IconLogout} onClick={signOut.mutate} />
       </Box>
     </Flex>
   )

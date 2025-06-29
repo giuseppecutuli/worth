@@ -2,6 +2,7 @@ import '@mantine/core/styles.css'
 import '@mantine/charts/styles.css'
 import '@mantine/dates/styles.css'
 import '@mantine/notifications/styles.css'
+import 'mantine-react-table/styles.css'
 import '@fontsource-variable/inter'
 // Initialize i18n before instantiate the react app
 import './lib/i18n'

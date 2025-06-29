@@ -1,5 +1,5 @@
+import type { TablerIcon } from '@tabler/icons-react'
 import { clsx } from 'clsx'
-import { type IconType } from 'react-icons'
 import { isString } from 'remeda'
 
 import { Link } from '@/components/Link'
@@ -10,7 +10,7 @@ import classes from './NavLink.module.scss'
 export type NavLinkProps = {
   label: string
   to?: FileRouteTypes['to']
-  icon: IconType
+  icon: TablerIcon
   collapsed?: boolean
   onClick?: () => void
 }

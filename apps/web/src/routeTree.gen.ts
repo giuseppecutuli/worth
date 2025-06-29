@@ -15,6 +15,7 @@ import { Route as _authIndexRouteImport } from './routes/__auth.index'
 import { Route as _guestRegisterRouteImport } from './routes/__guest.register'
 import { Route as _guestLoginRouteImport } from './routes/__guest.login'
 import { Route as _authSettingsRouteImport } from './routes/__auth.settings'
+import { Route as _authAccountsRouteImport } from './routes/__auth.accounts'
 
 const _guestRoute = _guestRouteImport.update({
   id: '/__guest',
@@ -44,14 +45,21 @@ const _authSettingsRoute = _authSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => _authRoute,
 } as any)
+const _authAccountsRoute = _authAccountsRouteImport.update({
+  id: '/accounts',
+  path: '/accounts',
+  getParentRoute: () => _authRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/accounts': typeof _authAccountsRoute
   '/settings': typeof _authSettingsRoute
   '/login': typeof _guestLoginRoute
   '/register': typeof _guestRegisterRoute
   '/': typeof _authIndexRoute
 }
 export interface FileRoutesByTo {
+  '/accounts': typeof _authAccountsRoute
   '/settings': typeof _authSettingsRoute
   '/login': typeof _guestLoginRoute
   '/register': typeof _guestRegisterRoute
@@ -61,6 +69,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/__auth': typeof _authRouteWithChildren
   '/__guest': typeof _guestRouteWithChildren
+  '/__auth/accounts': typeof _authAccountsRoute
   '/__auth/settings': typeof _authSettingsRoute
   '/__guest/login': typeof _guestLoginRoute
   '/__guest/register': typeof _guestRegisterRoute
@@ -68,13 +77,14 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/settings' | '/login' | '/register' | '/'
+  fullPaths: '/accounts' | '/settings' | '/login' | '/register' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/settings' | '/login' | '/register' | '/'
+  to: '/accounts' | '/settings' | '/login' | '/register' | '/'
   id:
     | '__root__'
     | '/__auth'
     | '/__guest'
+    | '/__auth/accounts'
     | '/__auth/settings'
     | '/__guest/login'
     | '/__guest/register'
@@ -130,15 +140,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof _authSettingsRouteImport
       parentRoute: typeof _authRoute
     }
+    '/__auth/accounts': {
+      id: '/__auth/accounts'
+      path: '/accounts'
+      fullPath: '/accounts'
+      preLoaderRoute: typeof _authAccountsRouteImport
+      parentRoute: typeof _authRoute
+    }
   }
 }
 
 interface _authRouteChildren {
+  _authAccountsRoute: typeof _authAccountsRoute
   _authSettingsRoute: typeof _authSettingsRoute
   _authIndexRoute: typeof _authIndexRoute
 }
 
 const _authRouteChildren: _authRouteChildren = {
+  _authAccountsRoute: _authAccountsRoute,
   _authSettingsRoute: _authSettingsRoute,
   _authIndexRoute: _authIndexRoute,
 }
