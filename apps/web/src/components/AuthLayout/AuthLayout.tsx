@@ -5,9 +5,9 @@ import { Navbar } from '@/components'
 
 export const AuthLayout: React.FC = () => {
   return (
-    <Flex>
+    <Flex style={{ overflow: 'hidden' }} maw="100vw">
       <Navbar />
-      <Box w="100%">
+      <Box flex={1} style={{ minWidth: 0 }}>
         <Container py="md">
           <Outlet />
         </Container>
