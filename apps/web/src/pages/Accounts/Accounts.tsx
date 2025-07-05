@@ -1,5 +1,5 @@
-import { Table } from '@/components/Table'
+import { AccountTable } from '@/components/AccountTable'
 
 export const AccountsPage = () => {
-  return <Table />
+  return <AccountTable />
 }
