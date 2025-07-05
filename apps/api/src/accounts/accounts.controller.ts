@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger'
 
 import { UseAuth, UseUser } from '@/auth/decorators'
-import { PaginatedDto } from '@/common/dtos'
+import { IncludeDto, PaginatedDto } from '@/common/dtos'
 import { ApiPaginatedResponse } from '@/common/utils/swagger'
 import { User } from '@/users/entities'
 
@@ -40,8 +40,8 @@ export class AccountsController {
   @Get(':id')
   @UseAuth()
   @ApiOkResponse({ type: Account })
-  get(@Param('id') id: string, @UseUser() user: User) {
-    return this.service.get(id, user)
+  get(@Param('id') id: string, @Query() query: IncludeDto, @UseUser() user: User) {
+    return this.service.get(id, user, query)
   }
 
   /**
@@ -54,8 +54,12 @@ export class AccountsController {
   @Post()
   @UseAuth()
   @ApiOkResponse({ type: Account })
-  create(@Body() body: CreateAccountDto, @UseUser() user: User): Promise<Account> {
-    return this.service.create(body, user)
+  create(
+    @Body() body: CreateAccountDto,
+    @UseUser() user: User,
+    @Query() query: IncludeDto,
+  ): Promise<Account> {
+    return this.service.create(body, user, query)
   }
 
   /**
@@ -73,8 +77,9 @@ export class AccountsController {
     @Param('id') id: string,
     @Body() body: UpdateAccountDto,
     @UseUser() user: User,
+    @Query() query: IncludeDto,
   ): Promise<Account> {
-    return this.service.update(id, body, user)
+    return this.service.update(id, body, user, query)
   }
 
   /**

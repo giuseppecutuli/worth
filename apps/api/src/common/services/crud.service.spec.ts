@@ -5,7 +5,7 @@ import { Prisma } from '@prisma/client'
 import { PrismaService } from '@/prisma/prisma.service'
 import { User } from '@/users/entities'
 
-import { BaseEntityDto, PaginateDto } from '../dtos'
+import { BaseEntityDto, IncludeDto, PaginateDto } from '../dtos'
 import { CrudService } from './crud.service'
 
 // Mock DTOs
@@ -15,14 +15,22 @@ class TestUpdateDto {}
 class TestEntity extends BaseEntityDto {
   user_id: string
 }
+class TestGetDto extends IncludeDto {}
 
 @Injectable()
-class TestCrudService extends CrudService<TestEntity, TestCreateDto, TestUpdateDto, TestListDto> {
+class TestCrudService extends CrudService<
+  TestEntity,
+  TestCreateDto,
+  TestUpdateDto,
+  TestListDto,
+  TestGetDto
+> {
   constructor(prisma: PrismaService) {
     // @ts-expect-error Only for testing
     super(prisma, 'Test')
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected buildWhere(query: TestListDto): Prisma.Args<any, 'findMany'>['where'] {
     return {}
   }

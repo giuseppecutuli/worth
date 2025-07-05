@@ -5,7 +5,7 @@ import { Prisma } from '@prisma/client'
 import { PrismaService } from '@/prisma/prisma.service'
 import { User } from '@/users/entities'
 
-import { PaginatedDto, PaginateDto } from '../dtos'
+import { IncludeDto, PaginatedDto, PaginateDto } from '../dtos'
 import { lcFirst } from '../utils'
 
 /**
@@ -16,7 +16,13 @@ import { lcFirst } from '../utils'
  * @template ListDto - List DTO type
  */
 @Injectable()
-export abstract class CrudService<Entity, CreateDto, UpdateDto, ListDto extends PaginateDto> {
+export abstract class CrudService<
+  Entity,
+  CreateDto,
+  UpdateDto,
+  ListDto extends PaginateDto,
+  GetDto extends IncludeDto = IncludeDto,
+> {
   constructor(
     protected readonly prisma: PrismaService,
     private readonly modelName: Prisma.ModelName,
@@ -64,6 +70,21 @@ export abstract class CrudService<Entity, CreateDto, UpdateDto, ListDto extends 
   }
 
   /**
+   * Build the include clause for queries
+   * @param query - Query params
+   * @returns {object} - The include clause
+   */
+  protected buildInclude(query?: IncludeDto): Record<string, boolean> | undefined {
+    if (!query?.include?.length) return undefined
+
+    const include = {}
+    query.include.forEach((relation) => {
+      include[relation] = true
+    })
+    return include
+  }
+
+  /**
    * List entities
    * @param query - Query params
    * @param user - User
@@ -77,11 +98,14 @@ export abstract class CrudService<Entity, CreateDto, UpdateDto, ListDto extends 
       [query.order.field]: query.order.direction,
     }
 
+    const include = this.buildInclude(query)
+
     const [count, data] = await Promise.all([
       this.model.count({ where }),
       this.model.findMany({
         where,
         orderBy,
+        include,
         take: query.limit,
         skip: query.page * query.limit,
       }),
@@ -103,9 +127,12 @@ export abstract class CrudService<Entity, CreateDto, UpdateDto, ListDto extends 
    * @returns {object} - The entity
    * @throws NotFoundException
    */
-  async get(id: string, user: User): Promise<Entity> {
+  async get(id: string, user: User, query?: GetDto): Promise<Entity> {
+    const include = this.buildInclude(query)
+
     const item = await this.model.findUnique({
       where: { id, user_id: user.id },
+      include,
     })
 
     if (!item) {
@@ -121,12 +148,15 @@ export abstract class CrudService<Entity, CreateDto, UpdateDto, ListDto extends 
    * @param user - User
    * @returns {object} - The created entity
    */
-  async create(_data: CreateDto, user: User): Promise<Entity> {
+  async create(_data: CreateDto, user: User, query?: GetDto): Promise<Entity> {
     const data = this.buildCreateData(_data, user)
     data.user_id = user.id
 
+    const include = this.buildInclude(query)
+
     return await this.model.create({
       data,
+      include,
     })
   }
 
@@ -138,10 +168,13 @@ export abstract class CrudService<Entity, CreateDto, UpdateDto, ListDto extends 
    * @returns {object} - The updated entity
    * @throws NotFoundException
    */
-  async update(id: string, data: UpdateDto, user: User): Promise<Entity> {
+  async update(id: string, data: UpdateDto, user: User, query?: GetDto): Promise<Entity> {
+    const include = this.buildInclude(query)
+
     const item = await this.model.update({
       where: { id, user_id: user.id },
       data: this.buildUpdateData(data, user),
+      include,
     })
 
     if (!item) {

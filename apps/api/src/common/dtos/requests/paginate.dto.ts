@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsOptional, Max, Min } from 'class-validator'
+import { IsArray, IsOptional, IsString, Max, Min } from 'class-validator'
 
 import { OrderQuery } from '@/common/decorators/order-query.decorator'
 import { SortDirection } from '@/common/types'
@@ -26,4 +26,10 @@ export class PaginateDto {
 
   @OrderQuery(DEFAULT_ORDER_FIELDS)
   order: OrderDto = DEFAULT_ORDER
+
+  @ApiProperty({ required: false, description: 'Include related entities' })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  include?: string[]
 }
